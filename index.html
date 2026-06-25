@@ -1031,13 +1031,38 @@ Examples: "500g Onion" gives {"name":"Onion","nameMl":"ഉള്ളി","qty":50
 Return ONLY a valid JSON array. No markdown, no backticks, no explanation.`;
 
   try{
-    // Use Puter.js with Gemini Flash Lite — completely free, no API key needed!
+    // Use Puter.js with Gemini — completely free, no API key needed!
     const imageDataUrl='data:'+mediaType+';base64,'+base64;
-    const response=await puter.ai.chat(prompt,imageDataUrl,{model:'gemini-2.5-flash-lite'});
-    const txt=(typeof response==='string')?response:(response?.message?.content?.[0]?.text||response?.text||'[]');
+    const response=await puter.ai.chat(
+      [{role:'user', content:[
+        {type:'text', text:prompt},
+        {type:'image_url', image_url:{url:imageDataUrl}}
+      ]}],
+      {model:'gemini-2.5-flash-lite'}
+    );
+    // Extract text from various response formats Puter.js may return
+    let txt='';
+    if(typeof response==='string') txt=response;
+    else if(response?.text) txt=response.text;
+    else if(response?.message?.content) {
+      const c=response.message.content;
+      if(typeof c==='string') txt=c;
+      else if(Array.isArray(c)) txt=c.map(x=>x.text||'').join('');
+    }
+    else if(response?.choices?.[0]?.message?.content) txt=response.choices[0].message.content;
+    else txt=JSON.stringify(response);
+
+    console.log('Puter response:', txt); // debug
+
+    // Strip markdown code blocks if present
+    txt=txt.replace(/```json/gi,'').replace(/```/g,'').trim();
     const s=txt.indexOf('['),en=txt.lastIndexOf(']');
-    if(s===-1)throw new Error('No grocery items detected in image');
+    if(s===-1){
+      // Response came back but no JSON array — show raw for debug
+      throw new Error('AI responded but could not find items. Response: '+txt.slice(0,200));
+    }
     scanItems=JSON.parse(txt.slice(s,en+1));
+    if(!scanItems.length) throw new Error('AI found no grocery items in this image');
     scanItems=scanItems.map(item=>{
       if(!item.nameMl){const lib=ING_LIB.find(l=>l.en.toLowerCase()===item.name.toLowerCase());if(lib)item.nameMl=lib.ml;}
       item.selected=true;return item;
@@ -1047,8 +1072,8 @@ Return ONLY a valid JSON array. No markdown, no backticks, no explanation.`;
     document.getElementById('scanContent').innerHTML=
       (previewSrc?'<img src="'+previewSrc+'" class="scanprev">':'')+
       '<div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;padding:12px;font-size:.78rem;color:#991B1B;margin-top:8px">'+
-      '❌ Scan failed: '+e.message+
-      '<br><br><b>Tips:</b><br>• Use a clear, well-lit photo<br>• Make sure item names are visible<br>• Try the 📝 Paste List option instead</div>';
+      '❌ '+e.message+
+      '<br><br><b>Try instead:</b><br>• Tap 📝 Paste List and type the items<br>• Use Manual entry for individual items</div>';
   }
 }
 
