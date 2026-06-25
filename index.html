@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Kerala Kitchen | കേരള കിച്ചൺ</title>
+<style>
+:root{--clay:#C25B3F;--clay2:#A34830;--leaf:#2D6A4F;--gold:#E8A020;--bg:#FDF6EC;--card:#FFFBF6;--line:#E5DDD4;--mid:#6B7280;--dark:#1C1917;--r:13px;--sh:0 2px 14px rgba(0,0,0,.07)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;padding-bottom:72px}
+.ml{font-family:'Noto Sans Malayalam',system-ui,sans-serif;font-size:.8em;color:var(--mid);display:block;margin-top:1px}
+header{background:linear-gradient(135deg,var(--clay),var(--clay2));color:#fff;padding:12px 15px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 3px 12px rgba(194,91,63,.3)}
+.hl h1{font-size:1.05rem;font-weight:800}.hl p{font-size:.65rem;opacity:.8;margin-top:1px}
+.hr{display:flex;align-items:center;gap:7px}
+.dot{width:9px;height:9px;border-radius:50%;background:#9CA3AF;transition:.4s;flex-shrink:0}
+.dot.g{background:#22C55E;box-shadow:0 0 6px #22C55E}.dot.r{background:#EF4444}.dot.o{background:var(--gold);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hbtn{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:20px;padding:5px 11px;font-size:.7rem;font-weight:600;cursor:pointer;white-space:nowrap}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:99;box-shadow:0 -3px 12px rgba(0,0,0,.06)}
+.tab{flex:1;padding:8px 3px 10px;text-align:center;font-size:.6rem;font-weight:700;color:var(--mid);cursor:pointer;border-top:3px solid transparent;transition:.2s}
+.tab span{display:block;font-size:1.15rem;margin-bottom:2px}.tab.on{color:var(--clay);border-top-color:var(--clay)}
+main{padding:12px 12px 0;max-width:600px;margin:0 auto}
+.pnl{display:none}.pnl.on{display:block}
+.card{background:var(--card);border-radius:var(--r);padding:13px;margin-bottom:10px;box-shadow:var(--sh);border:1px solid var(--line)}
+.rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.rh h2{font-size:.92rem;font-weight:800}
+.pill{background:var(--clay);color:#fff;font-size:.63rem;font-weight:700;padding:2px 9px;border-radius:10px}
+
+/* Smart search */
+.smart-search{position:relative;margin-bottom:11px}
+.smart-search input{padding:10px 12px 10px 36px;width:100%;border:2px solid var(--line);border-radius:10px;font-size:.86rem;background:#fff;font-family:inherit;transition:.2s}
+.smart-search input:focus{outline:none;border-color:var(--clay)}
+.smart-search::before{content:'🔍';position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.85rem;pointer-events:none}
+.ac-drop{position:absolute;top:100%;left:0;right:0;background:#fff;border:2px solid var(--clay);border-top:none;border-radius:0 0 11px 11px;z-index:60;max-height:220px;overflow-y:auto;display:none;box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.ac-drop.on{display:block}
+.ac-item{padding:9px 13px;cursor:pointer;border-bottom:1px solid var(--line);transition:.15s}
+.ac-item:hover{background:#FFF3E0}
+.ac-item:last-child{border-bottom:none}
+.ac-en{font-size:.84rem;font-weight:600;color:var(--dark)}
+.ac-ml{font-size:.75rem;color:var(--mid);margin-top:1px}
+.ac-type{font-size:.62rem;font-weight:700;padding:1px 6px;border-radius:6px;float:right;margin-top:2px}
+.type-food{background:#D1FAE5;color:#065F46}
+.type-ing{background:#EFF6FF;color:#1D4ED8}
+.type-new{background:#FEF3C7;color:#92400E}
+.ac-new{color:var(--clay);font-weight:700}
+
+/* chips */
+.chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:4px 11px;border-radius:18px;font-size:.7rem;font-weight:700;cursor:pointer;border:2px solid var(--line);background:#fff;color:var(--mid);transition:.18s}
+.chip.on{background:var(--clay);color:#fff;border-color:var(--clay)}
+
+/* food card */
+.fc{background:#fff;border-radius:var(--r);border:1px solid var(--line);margin-bottom:8px;overflow:hidden}
+.fc-hd{display:flex;align-items:center;gap:10px;padding:11px 12px;cursor:pointer;user-select:none}
+.fc-em{font-size:1.7rem;flex-shrink:0}
+.fc-inf{flex:1;min-width:0}
+.fc-nm{font-weight:800;font-size:.9rem}
+.fc-nml{font-size:.78rem;color:var(--mid);margin-top:1px}
+.fc-cat{display:inline-block;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:9px;margin:3px 0 4px;text-transform:uppercase}
+.cB{background:#FEF3C7;color:#92400E}.cL{background:#D1FAE5;color:#065F46}.cD{background:#EDE9FE;color:#4C1D95}.cS{background:#FCE7F3;color:#831843}.cO{background:#F1F5F9;color:#475569}
+.fc-note{font-size:.73rem;color:var(--mid);line-height:1.4}
+.fc-acts{display:flex;gap:5px;padding:0 12px 10px;flex-wrap:wrap}
+.sb{padding:5px 10px;border-radius:7px;font-size:.68rem;font-weight:700;cursor:pointer;border:none;transition:.18s;white-space:nowrap}
+.sb:hover{filter:brightness(.9)}
+.sbi{background:#EFF6FF;color:#1D4ED8}.sbp{background:var(--clay);color:#fff}.sbe{background:#F0FDF4;color:var(--leaf)}.sbd{background:#FEF2F2;color:#DC2626}.sbg{background:#FEF3C7;color:#92400E}
+.ip{display:none;padding:9px 12px 11px;border-top:1px dashed var(--line);background:#FAFAF9}
+.ip.on{display:block}
+.iphd{font-size:.66rem;font-weight:800;color:var(--leaf);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.irow{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #F0EAE2;font-size:.76rem}
+.irow:last-child{border-bottom:none}
+.irow-ml{font-size:.7rem;color:var(--mid)}
+.irqt{font-weight:700;color:var(--clay)}
+
+/* forms */
+.fg{margin-bottom:11px}
+label{display:block;font-size:.67rem;font-weight:700;color:var(--mid);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+input,select,textarea{width:100%;padding:9px 11px;border:2px solid var(--line);border-radius:9px;font-size:.84rem;background:#fff;color:var(--dark);font-family:inherit;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--clay)}
+textarea{resize:vertical;min-height:55px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+
+/* ingredient builder */
+.ibr{display:grid;grid-template-columns:1fr 100px 82px 30px;gap:4px;align-items:start;margin-bottom:6px}
+.ibr-name{position:relative}
+.ibr input,.ibr select{padding:7px 8px;font-size:.75rem}
+.rmbtn{background:#FEF2F2;color:#DC2626;border:none;border-radius:7px;height:34px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:0}
+.aibtn{background:#F0FDF4;color:var(--leaf);border:2px dashed #86EFAC;border-radius:9px;padding:7px;cursor:pointer;font-size:.73rem;font-weight:700;width:100%;margin-top:3px}
+.aibtn:hover{background:#DCFCE7}
+.copy-btn{background:#FEF3C7;color:#92400E;border:2px dashed #FCD34D;border-radius:9px;padding:7px;cursor:pointer;font-size:.73rem;font-weight:700;width:100%;margin-top:3px}
+
+/* buttons */
+.btn{background:var(--clay);color:#fff;border:none;border-radius:var(--r);padding:11px;font-size:.84rem;font-weight:800;cursor:pointer;width:100%;transition:.2s;margin-top:5px}
+.btn:hover{background:var(--clay2)}
+.btn2{background:#fff;color:var(--clay);border:2px solid var(--clay);border-radius:var(--r);padding:9px;font-size:.8rem;font-weight:700;cursor:pointer;width:100%;margin-top:5px;transition:.2s}
+.btn2:hover{background:var(--clay);color:#fff}
+
+/* date nav */
+.dr{display:flex;gap:6px;align-items:center;margin-bottom:12px}
+.dr input[type=date]{flex:1}
+.dnb{background:#fff;border:2px solid var(--line);border-radius:8px;padding:6px 9px;cursor:pointer;font-size:.73rem;font-weight:700;color:var(--mid);white-space:nowrap;transition:.18s}
+.dnb:hover{border-color:var(--clay);color:var(--clay)}
+.tdb{background:var(--clay);color:#fff;border-color:var(--clay)}
+
+/* meal block */
+.mb{background:#fff;border-radius:var(--r);border:1px solid var(--line);margin-bottom:10px;overflow:hidden}
+.mbhd{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#FAFAF9;border-bottom:1px solid var(--line)}
+.mblbl{font-size:.8rem;font-weight:800;display:flex;align-items:center;gap:5px}
+.mbbody{padding:9px 12px}
+.mi{padding:7px 0;border-bottom:1px dashed #F0EAE2}
+.mi:last-child{border-bottom:none}
+.mi-top{display:flex;align-items:center;gap:7px;font-size:.8rem}
+.mi-nm{flex:1;font-weight:700}
+.mi-nml{font-size:.7rem;color:var(--mid)}
+.mi-total{color:var(--clay);font-weight:800;font-size:.78rem;text-align:right;min-width:100px}
+.mi-dl{background:none;border:none;color:#DC2626;cursor:pointer;font-size:.8rem;flex-shrink:0;padding:2px 4px}
+/* editable portion row */
+.mi-portions{display:flex;align-items:center;gap:5px;margin-top:5px;flex-wrap:wrap}
+.mi-portions label{font-size:.62rem;font-weight:700;color:var(--mid);text-transform:uppercase;white-space:nowrap;margin:0}
+.port-member{display:flex;align-items:center;gap:4px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:3px 7px}
+.port-member span{font-size:.72rem;font-weight:600;color:#92400E;white-space:nowrap}
+.port-select{width:65px!important;padding:3px 4px!important;font-size:.7rem!important;border-radius:6px!important;border:1px solid #FED7AA!important;background:#fff!important}
+.port-frac{width:72px!important;padding:3px 4px!important;font-size:.68rem!important;border-radius:6px!important;border:1px solid #FED7AA!important;background:#fff!important}
+.em-meal{font-size:.74rem;color:#9CA3AF;font-style:italic;padding:3px 0}
+.ing-sum{margin-top:9px;padding-top:7px;border-top:1px dashed var(--line)}
+.ing-sum-hd{font-size:.65rem;font-weight:800;color:var(--leaf);text-transform:uppercase;margin-bottom:4px}
+.inrow{display:flex;justify-content:space-between;font-size:.73rem;padding:3px 0;border-bottom:1px dashed #F0EAE2}
+.inrow:last-child{border-bottom:none}
+.inrow-ml{font-size:.67rem;color:var(--mid)}
+.c-ok{color:var(--leaf);font-weight:700}.c-lw{color:var(--gold);font-weight:700}.c-no{color:#DC2626;font-weight:700}
+
+/* photo scan */
+.scan-box{background:linear-gradient(135deg,#FFF7ED,#FFEDD5);border:2px dashed var(--gold);border-radius:var(--r);padding:16px;margin-bottom:12px;text-align:center;cursor:pointer;transition:.2s}
+.scan-box:hover{background:#FFEDD5}
+.scan-box .scan-icon{font-size:2rem;margin-bottom:5px}
+.scan-box h3{font-size:.86rem;font-weight:800;color:#92400E}
+.scan-box p{font-size:.73rem;color:#78350F;margin-top:3px}
+.scan-preview{width:100%;max-height:200px;object-fit:contain;border-radius:9px;margin:10px 0;border:1px solid var(--line)}
+.scan-result-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.82rem}
+.scan-result-item:last-child{border-bottom:none}
+.sri-check{width:22px;height:22px;border-radius:5px;border:2px solid var(--leaf);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.15s}
+.sri-check.on{background:var(--leaf);color:#fff;border-color:var(--leaf)}
+.sri-info{flex:1;min-width:0}
+.sri-name{font-weight:700}
+.sri-ml{font-size:.71rem;color:var(--mid)}
+.sri-qty{display:flex;align-items:center;gap:5px;margin-top:4px;flex-wrap:wrap}
+.sri-qty input{width:65px;padding:4px 7px;font-size:.76rem;border-radius:7px;border:1.5px solid var(--line);background:#fff}
+.sri-qty select{width:75px;padding:4px 6px;font-size:.72rem;border-radius:7px;border:1.5px solid var(--line);background:#fff}
+.scanning-state{text-align:center;padding:24px;color:var(--mid)}
+.scan-spin{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--clay);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 10px}
+/* inventory */
+.inv-card{background:#fff;border-radius:var(--r);border:1px solid var(--line);padding:11px;margin-bottom:8px}
+.stbar{height:5px;border-radius:3px;background:#F3F4F6;overflow:hidden;margin-top:5px}
+.stfill{height:100%;border-radius:3px;transition:.4s}
+.sto{background:#22C55E}.stl{background:var(--gold)}.stx{background:#EF4444}
+.stlbl{font-size:.63rem;font-weight:700}
+.c-g{color:#16A34A}.c-y{color:var(--gold)}.c-r{color:#DC2626}
+
+/* suggestions */
+.sug-card{background:#fff;border-radius:var(--r);border:1px solid var(--line);padding:12px;margin-bottom:8px}
+.sug-card h3{font-size:.83rem;font-weight:800;margin-bottom:4px}
+.sug-card p{font-size:.76rem;color:var(--mid);line-height:1.5}
+.stag{display:inline-block;font-size:.63rem;font-weight:700;padding:2px 8px;border-radius:9px;margin-top:4px}
+.tg{background:#D1FAE5;color:#065F46}.tw{background:#FEF3C7;color:#92400E}.tr{background:#FEE2E2;color:#991B1B}
+
+/* family */
+.fam-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.8rem}
+.fam-row:last-child{border-bottom:none}
+.fam-nm{flex:1;font-weight:700}
+.fam-nml{font-size:.7rem;color:var(--mid)}
+.fam-ag{font-size:.7rem;color:var(--mid);background:#F1F5F9;padding:2px 7px;border-radius:7px}
+.fam-dl{background:none;border:none;color:#DC2626;cursor:pointer;font-size:.82rem}
+
+/* modal */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-end;justify-content:center}
+.ov.on{display:flex}
+.sheet{background:#fff;border-radius:20px 20px 0 0;padding:17px 15px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;animation:su .27s ease}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.shd{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.shd h3{font-size:.98rem;font-weight:800}
+.shd p{font-size:.72rem;color:var(--mid);margin-top:2px}
+.cls{background:var(--line);border:none;border-radius:50%;width:28px;height:28px;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--mid)}
+
+/* settings */
+.sb2{background:#fff;border-radius:var(--r);border:1px solid var(--line);padding:13px;margin-bottom:10px}
+.sb2 h3{font-size:.86rem;font-weight:800;margin-bottom:3px}
+.sb2 p{font-size:.74rem;color:var(--mid);line-height:1.5;margin-bottom:8px}
+.cff label{font-size:.66rem}.cff input{font-size:.74rem;padding:7px 9px;font-family:monospace;margin-bottom:7px}
+.conn-box{background:#F0FDF4;border:1px solid #86EFAC;border-radius:9px;padding:10px;font-size:.78rem;color:#065F46;font-weight:600;margin-bottom:9px;display:none}
+.conn-box.on{display:block}
+.err-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;padding:10px;font-size:.76rem;color:#991B1B;margin-bottom:9px;display:none;line-height:1.6}
+.err-box.on{display:block}
+
+/* toast */
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(28,25,23,.92);color:#fff;padding:8px 15px;border-radius:18px;font-size:.78rem;font-weight:600;opacity:0;transition:.27s;z-index:300;white-space:nowrap;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.ld{text-align:center;padding:30px 18px;color:var(--mid)}
+.spin{width:25px;height:25px;border:3px solid var(--line);border-top-color:var(--clay);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.em{text-align:center;padding:28px 16px;color:var(--mid)}
+.em .ei{font-size:2.2rem;margin-bottom:7px}
+.em h3{font-size:.86rem;font-weight:700}.em p{font-size:.74rem;margin-top:3px}
+.finfo{font-size:.76rem;color:#92400E;margin-bottom:9px;padding:8px 10px;background:#FFF7ED;border-radius:8px;border:1px solid #FED7AA;line-height:1.5}
+.ing-mini-ac{position:absolute;top:100%;left:0;right:0;background:#fff;border:2px solid var(--clay);border-top:none;border-radius:0 0 8px 8px;z-index:70;max-height:140px;overflow-y:auto;display:none}
+.ing-mini-ac.on{display:block}
+.ing-mini-ac div{padding:7px 10px;font-size:.78rem;cursor:pointer;border-bottom:1px solid var(--line)}
+.ing-mini-ac div:hover{background:#FFF3E0}
+.ing-mini-ac div:last-child{border-bottom:none}
+.ing-mini-ml{font-size:.68rem;color:var(--mid);display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hl">
+    <h1>🍛 Kerala Kitchen | കേരള കിച്ചൺ</h1>
+    <p>Family Meal Prep · കുടുംബ ഭക്ഷണ ആസൂത്രണം</p>
+  </div>
+  <div class="hr">
+    <div class="dot" id="dbDot"></div>
+    <button class="hbtn" onclick="syncAll()">⟳</button>
+    <button class="hbtn" onclick="openAddFood()">+ Food</button>
+  </div>
+</header>
+
+<main>
+
+<!-- FOODS -->
+<div id="pnl-foods" class="pnl on">
+  <div class="smart-search">
+    <input id="srchInput" placeholder="Search foods & ingredients | ഭക്ഷണം തിരയുക…" oninput="globalSearch()" onblur="setTimeout(closeGlobalAC,200)" autocomplete="off">
+    <div class="ac-drop" id="globalAC"></div>
+  </div>
+  <div class="chips">
+    <div class="chip on" onclick="setFilter('All',this)">All | എല്ലാം</div>
+    <div class="chip" onclick="setFilter('Breakfast',this)">🌅 Breakfast</div>
+    <div class="chip" onclick="setFilter('Lunch',this)">☀️ Lunch</div>
+    <div class="chip" onclick="setFilter('Dinner',this)">🌙 Dinner</div>
+    <div class="chip" onclick="setFilter('Snack',this)">🍟 Snack</div>
+  </div>
+  <div class="rh"><h2>Food Database | ഭക്ഷണ ഡേറ്റാബേസ്</h2><span class="pill" id="fCount">0</span></div>
+  <div id="foodList"><div class="ld"><div class="spin"></div>Connecting…</div></div>
+</div>
+
+<!-- MEAL PLAN -->
+<div id="pnl-plan" class="pnl">
+  <div class="dr">
+    <input type="date" id="planDate" onchange="loadPlan()">
+    <button class="dnb" onclick="shiftDay(-1)">◀</button>
+    <button class="dnb tdb" onclick="goToday()">Today</button>
+    <button class="dnb" onclick="shiftDay(1)">▶</button>
+  </div>
+  <div id="planArea"><div class="ld"><div class="spin"></div>Loading…</div></div>
+</div>
+
+<!-- INVENTORY -->
+<div id="pnl-inv" class="pnl">
+  <div class="rh"><h2>🧺 Stock | സ്റ്റോക്ക്</h2>
+    <div style="display:flex;gap:6px">
+      <button class="sb sbg" onclick="openScanModal()">📷 Scan Bill</button>
+      <button class="sb sbp" onclick="openAddIngModal()">+ Add</button>
+    </div>
+  </div>
+  <!-- Photo scan box -->
+  <div class="scan-box" onclick="document.getElementById('scanFileInput').click()">
+    <input type="file" id="scanFileInput" accept="image/*" style="display:none" onchange="handleScanFile(this)">
+    <div class="scan-icon">📷</div>
+    <h3>Scan Grocery Bill / Delivery Screenshot</h3>
+    <p>Tap to upload photo — Claude AI reads items and updates your stock automatically</p>
+  </div>
+  <div class="smart-search">
+    <input id="invSearch" placeholder="Search ingredients | ചേരുവകൾ തിരയുക…" oninput="renderInventory()" autocomplete="off">
+  </div>
+  <div id="invList"><div class="ld"><div class="spin"></div>Loading…</div></div>
+</div>
+
+<!-- SUGGESTIONS -->
+<div id="pnl-sug" class="pnl">
+  <div class="rh"><h2>💡 What to Cook? | എന്ത് വേക്കാം?</h2><button class="sb sbp" onclick="generateSuggestions()">Refresh</button></div>
+  <div id="sugArea"><div class="em"><div class="ei">💡</div><h3>Tap Refresh</h3><p>Based on your current stock</p></div></div>
+</div>
+
+<!-- SETTINGS -->
+<div id="pnl-set" class="pnl">
+  <div class="sb2">
+    <h3>🤖 Claude AI — Photo Scanning</h3>
+    <p>Enter your Anthropic API key to enable photo scanning of grocery bills. Get a free key at <b>console.anthropic.com</b>.</p>
+    <div class="fg"><label>Anthropic API Key</label>
+      <input type="password" id="anthropicKey" placeholder="sk-ant-api03-…" oninput="saveAnthropicKey()" style="font-family:monospace;font-size:.74rem">
+    </div>
+    <div id="apiKeyStatus" style="font-size:.74rem;color:var(--mid);margin-top:4px"></div>
+  </div>
+
+  <div class="sb2">
+    <h3>🔥 Firebase Status</h3>
+    <p>Using REST API — works from any browser once hosted online.</p>
+    <div class="conn-box" id="connBox">✅ Connected to Firebase</div>
+    <div class="err-box" id="errBox"></div>
+    <button class="btn" onclick="testConnection()">🔗 Test Connection</button>
+    <button class="btn2" onclick="seedFoods()">🌱 Load Default Kerala Foods</button>
+  </div>
+  <div class="sb2">
+    <h3>👨‍👩‍👧‍👦 Family | കുടുംബം</h3>
+    <p>Add members with their default portion size. You can still change portions for each meal individually.</p>
+    <div id="famList"></div>
+    <button class="btn2" onclick="openFamModal()">+ Add Member</button>
+  </div>
+  <div class="sb2">
+    <h3>📋 How to use</h3>
+    <div style="font-size:.76rem;color:var(--mid);line-height:1.9">
+      <b>1.</b> Add family members in Setup above<br>
+      <b>2.</b> Load Kerala foods → add ingredients to each<br>
+      <b>3.</b> Go to 🧺 Stock → add your ingredient quantities<br>
+      <b>4.</b> Go to 📅 Plan → add foods to each meal<br>
+      <b>5.</b> Edit each person's portion for that meal if needed<br>
+      <b>6.</b> App shows total ingredients needed for the family<br>
+      <b>7.</b> 💡 Ideas tab shows what you can cook with current stock
+    </div>
+  </div>
+</div>
+</main>
+
+<nav>
+  <div class="tab on" onclick="sw('foods',this)"><span>🥘</span>Foods</div>
+  <div class="tab" onclick="sw('plan',this)"><span>📅</span>Plan</div>
+  <div class="tab" onclick="sw('inv',this)"><span>🧺</span>Stock</div>
+  <div class="tab" onclick="sw('sug',this)"><span>💡</span>Ideas</div>
+  <div class="tab" onclick="sw('set',this)"><span>⚙️</span>Setup</div>
+</nav>
+
+<!-- PLAN MODAL -->
+<div class="ov" id="planModal">
+  <div class="sheet">
+    <div class="shd">
+      <div><h3 id="planTitle">Add to Plan</h3><p id="planSubtitle"></p></div>
+      <button class="cls" onclick="closeMod('planModal')">✕</button>
+    </div>
+    <div class="fg"><label>Date</label><input type="date" id="pmDate"></div>
+    <div class="fg"><label>Meal | ഭക്ഷണ സമയം</label>
+      <select id="pmMeal"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select>
+    </div>
+    <div class="fg">
+      <label>Default portions per person (editable per meal)</label>
+      <div style="display:flex;gap:6px">
+        <select id="pmW" style="width:80px"><option value="0">0</option><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="250">250</option><option value="500">500</option></select>
+        <select id="pmF" style="flex:1"><option value="0">— whole</option><option value="0.25">and 1/4 (quarter)</option><option value="0.5">and 1/2 (half)</option><option value="0.75">and 3/4 (three‑quarters)</option></select>
+        <select id="pmU" style="width:90px"><option>numbers</option><option>g</option><option>mL</option><option>cups</option><option>servings</option><option>tbsp</option><option>tsp</option><option>kg</option></select>
+      </div>
+    </div>
+    <div class="finfo" id="pmFamInfo"></div>
+    <button class="btn" onclick="confirmPlan()">✅ Add to Meal Plan</button>
+  </div>
+</div>
+
+<!-- EDIT FOOD MODAL -->
+<div class="ov" id="editModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>Edit Food | ഭക്ഷണം എഡിറ്റ് ചെയ്യുക</h3></div><button class="cls" onclick="closeMod('editModal')">✕</button></div>
+    <input type="hidden" id="eId">
+    <div class="two">
+      <div class="fg"><label>English Name *</label><input id="eName" placeholder="e.g. Idli"></div>
+      <div class="fg"><label>Malayalam Name</label><input id="eNameMl" placeholder="e.g. ഇഡ്ഡലി"></div>
+    </div>
+    <div class="two">
+      <div class="fg"><label>Category</label><select id="eCat"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option><option>Other</option></select></div>
+      <div class="fg"><label>Default Unit</label><select id="eUnit"><option value="numbers">Numbers</option><option value="g">g</option><option value="mL">mL</option><option value="cups">Cups</option><option value="servings">Servings</option><option value="tbsp">Tbsp</option><option value="tsp">Tsp</option></select></div>
+    </div>
+    <div class="two">
+      <div class="fg"><label>Calories/serving</label><input type="number" id="eCal"></div>
+      <div class="fg"><label>Notes</label><input id="eNotes"></div>
+    </div>
+    <div class="fg">
+      <label>Ingredients per 1 serving | 1 സെർവിംഗിന് ചേരുവകൾ</label>
+      <div id="eIngList"></div>
+      <button class="aibtn" onclick="addIRow('eIngList')">＋ Add Ingredient</button>
+      <button class="copy-btn" onclick="openCopyModal('eIngList')">📋 Copy from another dish</button>
+    </div>
+    <button class="btn" onclick="saveEdit()">💾 Save Changes</button>
+  </div>
+</div>
+
+<!-- ADD FOOD MODAL -->
+<div class="ov" id="addModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>Add New Food | പുതിയ ഭക്ഷണം</h3></div><button class="cls" onclick="closeMod('addModal')">✕</button></div>
+    <div class="two">
+      <div class="fg"><label>English Name *</label><input id="aName" placeholder="e.g. Appam"></div>
+      <div class="fg"><label>Malayalam Name</label><input id="aNameMl" placeholder="e.g. അപ്പം"></div>
+    </div>
+    <div class="two">
+      <div class="fg"><label>Category</label><select id="aCat"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option><option>Other</option></select></div>
+      <div class="fg"><label>Default Unit</label><select id="aUnit"><option value="numbers">Numbers</option><option value="g">g</option><option value="mL">mL</option><option value="cups">Cups</option><option value="servings">Servings</option><option value="tbsp">Tbsp</option><option value="tsp">Tsp</option></select></div>
+    </div>
+    <div class="fg"><label>Notes</label><textarea id="aNotes" placeholder="Description…"></textarea></div>
+    <div class="fg">
+      <label>Ingredients per 1 serving | 1 സെർവിംഗിന് ചേരുവകൾ</label>
+      <div id="aIngList"></div>
+      <button class="aibtn" onclick="addIRow('aIngList')">＋ Add Ingredient</button>
+      <button class="copy-btn" onclick="openCopyModal('aIngList')">📋 Copy from another dish</button>
+    </div>
+    <button class="btn" onclick="saveFood()">💾 Save to Firebase</button>
+  </div>
+</div>
+
+<!-- COPY FROM DISH MODAL -->
+<div class="ov" id="copyModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>Copy Ingredients From</h3><p>Select a dish to copy its ingredients</p></div><button class="cls" onclick="closeMod('copyModal')">✕</button></div>
+    <div class="smart-search" style="margin-bottom:8px">
+      <input id="copySearch" placeholder="Search dish…" oninput="renderCopyList()">
+    </div>
+    <div id="copyList"></div>
+  </div>
+</div>
+
+<!-- ADD INGREDIENT MODAL -->
+<div class="ov" id="addIngModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>Add to Stock | സ്റ്റോക്കിലേക്ക്</h3></div><button class="cls" onclick="closeMod('addIngModal')">✕</button></div>
+    <div class="fg"><label>Ingredient | ചേരുവ</label>
+      <div style="position:relative">
+        <input id="ingName" placeholder="Search or type ingredient name…" oninput="ingAcSearch()" onblur="setTimeout(closeIngAC,200)" autocomplete="off">
+        <div class="ac-drop" id="ingAcDrop"></div>
+      </div>
+    </div>
+    <div class="fg"><label>Malayalam Name (optional)</label><input id="ingNameMl" placeholder="e.g. തേങ്ങ എണ്ണ"></div>
+    <div class="two">
+      <div class="fg"><label>Current Stock</label>
+        <div style="display:flex;gap:4px">
+          <select id="ingW" style="flex:1"><option value="0">0</option><option value="1" selected>1</option><option value="2">2</option><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="250">250</option><option value="500">500</option><option value="1000">1000</option></select>
+          <select id="ingF" style="width:100px"><option value="0">— whole</option><option value="0.25">and 1/4</option><option value="0.5">and 1/2</option><option value="0.75">and 3/4</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>Unit</label><select id="ingU"><option>g</option><option>kg</option><option>mL</option><option>litre</option><option>cups</option><option>numbers</option><option>tbsp</option><option>tsp</option></select></div>
+    </div>
+    <div class="fg"><label>Low Stock Alert Level</label><input type="number" id="ingMin" placeholder="e.g. 100" value="100"></div>
+    <button class="btn" onclick="saveIngredient()">💾 Save to Stock</button>
+  </div>
+</div>
+
+<!-- FAMILY MEMBER MODAL -->
+<div class="ov" id="famModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>Add Family Member</h3></div><button class="cls" onclick="closeMod('famModal')">✕</button></div>
+    <div class="two">
+      <div class="fg"><label>Name | പേര്</label><input id="famName" placeholder="e.g. Amma, Mol…"></div>
+      <div class="fg"><label>Age | പ്രായം</label><input type="number" id="famAge" placeholder="e.g. 35"></div>
+    </div>
+    <div class="fg"><label>Default Appetite</label>
+      <select id="famApp">
+        <option value="1">Normal (1×)</option>
+        <option value="0.5">Child — Half (0.5×)</option>
+        <option value="0.75">Light (0.75×)</option>
+        <option value="1.25">Hungry (1.25×)</option>
+        <option value="1.5">Very hungry (1.5×)</option>
+      </select>
+    </div>
+    <p style="font-size:.74rem;color:var(--mid);margin-top:4px">💡 This is just the default. You can change each person's portion for every individual meal.</p>
+    <button class="btn" onclick="saveFamMember()">✅ Add Member</button>
+  </div>
+</div>
+
+<!-- SCAN MODAL -->
+<div class="ov" id="scanModal">
+  <div class="sheet">
+    <div class="shd">
+      <div><h3>📷 Scan Grocery Bill</h3><p>Claude AI reads items and updates stock</p></div>
+      <button class="cls" onclick="closeMod('scanModal')">✕</button>
+    </div>
+    <div id="scanContent">
+      <div class="scan-box" onclick="document.getElementById('scanFileInput2').click()" style="margin-bottom:0">
+        <input type="file" id="scanFileInput2" accept="image/*" style="display:none" onchange="handleScanFile(this)">
+        <div class="scan-icon">📷</div>
+        <h3>Upload photo</h3>
+        <p>Grocery delivery screenshot, bill photo, or fridge photo</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+// FIREBASE REST API
+// ═══════════════════════════════════════
+const DB = "https://meal-prep-3606d-default-rtdb.asia-southeast1.firebasedatabase.app";
+// Proxy URL to bypass Firebase asia-southeast1 CORS/connection issues
+const USE_PROXY = true;
+const PROXY = "https://api.allorigins.win/get?url=";
+// Firebase REST - direct calls for write, proxy for read (fixes asia-southeast1 hang)
+async function fbGet(p) {
+  // Try direct first, fall back to proxy
+  try {
+    const r = await Promise.race([
+      fetch(`${DB}/${p}.json`),
+      new Promise((_,reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+    ]);
+    if (r.ok) return r.json();
+    throw new Error('HTTP ' + r.status);
+  } catch(e) {
+    // Fall back to allorigins proxy
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(DB+'/'+p+'.json')}`;
+    const r2 = await Promise.race([
+      fetch(proxyUrl),
+      new Promise((_,reject) => setTimeout(() => reject(new Error('Proxy timeout')), 12000))
+    ]);
+    if (!r2.ok) throw new Error('Proxy HTTP ' + r2.status);
+    const data = await r2.json();
+    return JSON.parse(data.contents);
+  }
+}
+async function fbSet(p,d)   {
+  const r = await fetch(`${DB}/${p}.json`,{method:'PUT',body:JSON.stringify(d),headers:{'Content-Type':'application/json'}});
+  if(!r.ok) throw new Error('HTTP '+r.status); return r.json();
+}
+async function fbPush(p,d)  {
+  const r = await fetch(`${DB}/${p}.json`,{method:'POST',body:JSON.stringify(d),headers:{'Content-Type':'application/json'}});
+  if(!r.ok) throw new Error('HTTP '+r.status); return r.json();
+}
+async function fbPatch(p,d) {
+  const r = await fetch(`${DB}/${p}.json`,{method:'PATCH',body:JSON.stringify(d),headers:{'Content-Type':'application/json'}});
+  if(!r.ok) throw new Error('HTTP '+r.status); return r.json();
+}
+async function fbDelete(p)  {
+  const r = await fetch(`${DB}/${p}.json`,{method:'DELETE'});
+  if(!r.ok) throw new Error('HTTP '+r.status); return r.json();
+}
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let foods={}, inventory={}, family={}, planData={}, pendingFood=null, pendingCopyTarget=null, activeFilter='All';
+
+// ═══════════════════════════════════════
+// KERALA INGREDIENT LIBRARY (English + Malayalam)
+// ═══════════════════════════════════════
+const ING_LIB = [
+  // Grains & Flours
+  {en:"Rice",ml:"അരി",cat:"grain"},{en:"Matta rice",ml:"മട്ട അരി",cat:"grain"},{en:"Raw rice",ml:"പച്ചരി",cat:"grain"},{en:"Idli rice",ml:"ഇഡ്ഡലി അരി",cat:"grain"},{en:"Puttu podi",ml:"പുട്ടുപൊടി",cat:"grain"},{en:"Atta flour",ml:"ഗോതമ്പ് മാവ്",cat:"grain"},{en:"Maida",ml:"മൈദ",cat:"grain"},{en:"Rava / Sooji",ml:"റവ",cat:"grain"},{en:"Poha",ml:"അവൽ",cat:"grain"},{en:"Rice flour",ml:"അരിമാവ്",cat:"grain"},
+  // Dal & Lentils
+  {en:"Urad dal",ml:"ഉഴുന്ന്",cat:"dal"},{en:"Chana dal",ml:"കടലപ്പരിപ്പ്",cat:"dal"},{en:"Moong dal",ml:"ചെറുപയർ",cat:"dal"},{en:"Toor dal",ml:"തുവരപ്പരിപ്പ്",cat:"dal"},{en:"Kadala",ml:"കടല",cat:"dal"},{en:"Rajma",ml:"രാജ്മ",cat:"dal"},{en:"Green peas",ml:"പച്ചപ്പയർ",cat:"dal"},
+  // Vegetables
+  {en:"Onion",ml:"ഉള്ളി",cat:"veg"},{en:"Tomato",ml:"തക്കാളി",cat:"veg"},{en:"Potato",ml:"ഉരുളക്കിഴങ്ങ്",cat:"veg"},{en:"Green chilli",ml:"പച്ചമുളക്",cat:"veg"},{en:"Yellow pumpkin",ml:"മത്തൻ",cat:"veg"},{en:"Bitter gourd",ml:"പാവൽ",cat:"veg"},{en:"Drumstick",ml:"മുരിങ്ങക്കായ",cat:"veg"},{en:"Raw banana",ml:"കൈപ്പഴം / നേന്ത്രക്കായ",cat:"veg"},{en:"Yam",ml:"ചേന",cat:"veg"},{en:"Elephant yam",ml:"ചേമ്പ്",cat:"veg"},{en:"Ash gourd",ml:"കുമ്പളം",cat:"veg"},{en:"Snake gourd",ml:"പടവലം",cat:"veg"},{en:"Brinjal",ml:"വഴുതന",cat:"veg"},{en:"Beans",ml:"ബീൻസ്",cat:"veg"},{en:"Cabbage",ml:"കാബേജ്",cat:"veg"},{en:"Carrot",ml:"കാരറ്റ്",cat:"veg"},{en:"Beetroot",ml:"ബീറ്റ്റൂട്ട്",cat:"veg"},{en:"Tapioca",ml:"കപ്പ",cat:"veg"},
+  // Fruits
+  {en:"Ripe mango",ml:"മൊഞ്ചൻ മാമ്പഴം",cat:"fruit"},{en:"Pineapple",ml:"കൈതച്ചക്ക",cat:"fruit"},{en:"Banana",ml:"പഴം",cat:"fruit"},{en:"Coconut",ml:"തേങ്ങ",cat:"fruit"},{en:"Grated coconut",ml:"ചിരകിയ തേങ്ങ",cat:"fruit"},{en:"Jackfruit",ml:"ചക്ക",cat:"fruit"},
+  // Proteins
+  {en:"Eggs",ml:"മുട്ട",cat:"protein"},{en:"Chicken",ml:"കോഴി",cat:"protein"},{en:"Fish",ml:"മീൻ",cat:"protein"},{en:"Prawns",ml:"ചെമ്മീൻ",cat:"protein"},{en:"Mutton",ml:"ആടിറച്ചി",cat:"protein"},{en:"Beef",ml:"പോത്തിറച്ചി",cat:"protein"},{en:"Sardine",ml:"മത്തി",cat:"protein"},{en:"Mackerel",ml:"അയല",cat:"protein"},{en:"Pearl spot",ml:"കരിമീൻ",cat:"protein"},
+  // Dairy
+  {en:"Curd",ml:"തൈര്",cat:"dairy"},{en:"Milk",ml:"പാൽ",cat:"dairy"},{en:"Coconut milk",ml:"തേങ്ങ പാൽ",cat:"dairy"},{en:"Butter",ml:"വെണ്ണ",cat:"dairy"},{en:"Ghee",ml:"നെയ്യ്",cat:"dairy"},
+  // Oils & Fats
+  {en:"Coconut oil",ml:"വെളിച്ചെണ്ണ",cat:"oil"},{en:"Oil",ml:"എണ്ണ",cat:"oil"},{en:"Mustard oil",ml:"കടുകെണ്ണ",cat:"oil"},
+  // Spices
+  {en:"Salt",ml:"ഉപ്പ്",cat:"spice"},{en:"Turmeric",ml:"മഞ്ഞൾ",cat:"spice"},{en:"Red chilli powder",ml:"കുരുമുളക് പൊടി",cat:"spice"},{en:"Chilli powder",ml:"മുളകുപൊടി",cat:"spice"},{en:"Coriander powder",ml:"മല്ലിപ്പൊടി",cat:"spice"},{en:"Garam masala",ml:"ഗരം മസാല",cat:"spice"},{en:"Mustard seeds",ml:"കടുക്",cat:"spice"},{en:"Cumin seeds",ml:"ജീരകം",cat:"spice"},{en:"Fenugreek seeds",ml:"ഉലുവ",cat:"spice"},{en:"Pepper",ml:"കുരുമുളക്",cat:"spice"},{en:"Cardamom",ml:"ഏലക്ക",cat:"spice"},{en:"Cloves",ml:"ഗ്രാമ്പൂ",cat:"spice"},{en:"Cinnamon",ml:"കറുവ",cat:"spice"},{en:"Bay leaf",ml:"വേപ്പില",cat:"spice"},{en:"Star anise",ml:"തക്കോലം",cat:"spice"},
+  // Aromatics
+  {en:"Ginger",ml:"ഇഞ്ചി",cat:"aroma"},{en:"Garlic",ml:"വെളുത്തുള്ളി",cat:"aroma"},{en:"Ginger-garlic paste",ml:"ഇഞ്ചി വെളുത്തുള്ളി അരപ്പ്",cat:"aroma"},{en:"Curry leaves",ml:"കറിവേപ്പില",cat:"aroma"},{en:"Coriander leaves",ml:"മല്ലിയില",cat:"aroma"},{en:"Green onion",ml:"ചെറിയ ഉള്ളി",cat:"aroma"},
+  // Others
+  {en:"Water",ml:"വെള്ളം",cat:"other"},{en:"Sugar",ml:"പഞ്ചസാര",cat:"other"},{en:"Jaggery",ml:"ശർക്കര",cat:"other"},{en:"Vinegar",ml:"വിനാഗിരി",cat:"other"},{en:"Tamarind",ml:"പുളി",cat:"other"},{en:"Dosa batter",ml:"ദോശ മാവ്",cat:"other"},{en:"Idli batter",ml:"ഇഡ്ഡലി മാവ്",cat:"other"}
+];
+
+// ═══════════════════════════════════════
+// FOOD DATA (English + Malayalam names)
+// ═══════════════════════════════════════
+const FOOD_LIB = [
+  {en:"Idli",ml:"ഇഡ്ഡലി"},{en:"Puttu",ml:"പുട്ട്"},{en:"Dosa",ml:"ദോശ"},{en:"Appam",ml:"അപ്പം"},
+  {en:"Egg Omelette",ml:"മുട്ട ഒംലറ്റ്"},{en:"Boiled Egg",ml:"വേവിച്ച മുട്ട"},{en:"Egg Curry",ml:"മുട്ട കറി"},
+  {en:"Rice",ml:"ചോറ്"},{en:"Mathan Curry",ml:"മത്തൻ കറി"},{en:"Pulissery",ml:"പുളിശ്ശേരി"},
+  {en:"Chicken Curry",ml:"കോഴി കറി"},{en:"Fish Curry",ml:"മീൻ കറി"},{en:"Sambar",ml:"സാമ്പാർ"},
+  {en:"Rasam",ml:"രസം"},{en:"Aviyal",ml:"അവിയൽ"},{en:"Thoran",ml:"തോരൻ"},
+  {en:"Olan",ml:"ഓലൻ"},{en:"Erissery",ml:"എരിശ്ശേരി"},{en:"Kalan",ml:"കാളൻ"}
+];
+
+const UNITS=['numbers','g','mL','cups','servings','tbsp','tsp','kg','litre','sprig','pinch'];
+const QS=['as needed','a pinch','1/4','1/2','3/4','1','1 and 1/4','1 and 1/2','1 and 3/4','2','2 and 1/4','2 and 1/2','2 and 3/4','3','3 and 1/2','4','5','6','7','8','10','12','15','20','25','50','100','200','250','500'];
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+window.addEventListener('DOMContentLoaded', async () => {
+  const t = new Date().toISOString().split('T')[0];
+  document.getElementById('planDate').value = t;
+  document.getElementById('pmDate').value = t;
+  await loadAll();
+});
+
+async function loadAll() {
+  setDot('o');
+  document.getElementById('foodList').innerHTML = '<div class="ld"><div class="spin"></div>Connecting to Firebase…</div>';
+
+  // Step by step with individual error reporting
+  try {
+    setStatus('📂 Loading foods…');
+    const f = await fbGet('foods');
+    foods = f || {};
+    renderFoods();
+
+    setStatus('🧺 Loading inventory…');
+    const inv = await fbGet('inventory');
+    inventory = inv || {};
+    renderInventory();
+
+    setStatus('👨‍👩‍👧‍👦 Loading family…');
+    const fam = await fbGet('family');
+    family = fam || {};
+    renderFamily();
+
+    setDot('g');
+    document.getElementById('connBox').classList.add('on');
+    document.getElementById('errBox').classList.remove('on');
+    clearStatus();
+    toast('✅ Connected! ' + Object.keys(foods).length + ' foods loaded');
+  } catch(e) {
+    setDot('r');
+    document.getElementById('connBox').classList.remove('on');
+    const eb = document.getElementById('errBox');
+    eb.classList.add('on');
+    eb.innerHTML = '❌ Error: ' + e.message +
+      '<br><br>Your Firebase URL: <code style="font-size:.7rem;word-break:break-all">' + DB + '</code>' +
+      '<br><br>Tap <b>Test Connection</b> to retry.';
+    document.getElementById('foodList').innerHTML =
+      '<div class="em"><div class="ei">⚠️</div><h3>' + e.message + '</h3>' +
+      '<p>Go to ⚙️ Setup → tap Test Connection</p></div>';
+    toast('❌ ' + e.message);
+  }
+}
+
+function setStatus(msg) {
+  const el = document.getElementById('foodList');
+  if (el) el.innerHTML = '<div class="ld"><div class="spin"></div>' + msg + '</div>';
+}
+function clearStatus() {}
+function setDot(c){['dbDot'].forEach(id=>{const d=document.getElementById(id);if(d)d.className='dot '+c;});}
+async function testConnection(){toast('Testing…');await loadAll();}
+async function syncAll(){toast('⟳ Syncing…');await loadAll();const date=document.getElementById('planDate').value;if(date)await loadPlan();toast('✅ Synced');}
+
+// ═══════════════════════════════════════
+// GLOBAL SEARCH (Foods + Ingredients)
+// ═══════════════════════════════════════
+function globalSearch() {
+  const q = (document.getElementById('srchInput').value || '').toLowerCase().trim();
+  const drop = document.getElementById('globalAC');
+  if (!q) { drop.classList.remove('on'); renderFoods(); return; }
+
+  // Search foods (DB + library)
+  const foodResults = [];
+  // from DB
+  Object.entries(foods).forEach(([k, f]) => {
+    if (f.name.toLowerCase().includes(q) || (f.nameMl||'').includes(q)) {
+      foodResults.push({key:k, en:f.name, ml:f.nameMl||'', type:'food', source:'db'});
+    }
+  });
+  // from library (not already in db)
+  FOOD_LIB.forEach(f => {
+    if ((f.en.toLowerCase().includes(q) || f.ml.includes(q)) &&
+        !foodResults.find(r => r.en.toLowerCase() === f.en.toLowerCase())) {
+      foodResults.push({en:f.en, ml:f.ml, type:'food', source:'lib'});
+    }
+  });
+
+  // Search ingredients (DB + library)
+  const ingResults = [];
+  Object.values(inventory).forEach(i => {
+    if (i.name.toLowerCase().includes(q) || (i.nameMl||'').includes(q)) {
+      ingResults.push({en:i.name, ml:i.nameMl||'', type:'ing', stock:i.stock, unit:i.unit});
+    }
+  });
+  ING_LIB.forEach(i => {
+    if ((i.en.toLowerCase().includes(q) || i.ml.includes(q)) &&
+        !ingResults.find(r => r.en.toLowerCase() === i.en.toLowerCase())) {
+      ingResults.push({en:i.en, ml:i.ml, type:'ing', source:'lib'});
+    }
+  });
+
+  const all = [...foodResults.slice(0,6), ...ingResults.slice(0,6)];
+  if (!all.length) { drop.classList.remove('on'); return; }
+
+  drop.innerHTML = all.map(item => {
+    const typeLabel = item.type === 'food'
+      ? `<span class="ac-type type-food">Food</span>`
+      : `<span class="ac-type type-ing">Ingredient</span>`;
+    const stockInfo = item.stock !== undefined ? ` · ${fmtN(item.stock)} ${item.unit}` : '';
+    return `<div class="ac-item" onclick="selectGlobal(${JSON.stringify(item).replace(/"/g,'&quot;')})">
+      ${typeLabel}
+      <div class="ac-en">${item.en}${stockInfo}</div>
+      ${item.ml ? `<div class="ac-ml">${item.ml}</div>` : ''}
+    </div>`;
+  }).join('');
+  drop.classList.add('on');
+}
+
+function selectGlobal(item) {
+  closeGlobalAC();
+  document.getElementById('srchInput').value = item.en;
+  if (item.type === 'food') {
+    // filter foods list
+    activeFilter = 'All';
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+    document.querySelector('.chip').classList.add('on');
+    renderFoods();
+  } else {
+    // jump to inventory
+    sw('inv', document.querySelectorAll('.tab')[2]);
+    document.getElementById('invSearch').value = item.en;
+    renderInventory();
+  }
+}
+function closeGlobalAC() { document.getElementById('globalAC').classList.remove('on'); }
+
+// ═══════════════════════════════════════
+// FOODS
+// ═══════════════════════════════════════
+function setFilter(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on'); renderFoods();
+}
+
+function renderFoods() {
+  const q = (document.getElementById('srchInput')?.value || '').toLowerCase();
+  const keys = Object.keys(foods).filter(k =>
+    (activeFilter === 'All' || foods[k].category === activeFilter) &&
+    (!q || foods[k].name.toLowerCase().includes(q) || (foods[k].nameMl||'').includes(q))
+  );
+  document.getElementById('fCount').textContent = keys.length;
+  if (!keys.length) {
+    document.getElementById('foodList').innerHTML =
+      '<div class="em"><div class="ei">🍽️</div><h3>No foods found</h3><p>Add a food or change filter</p></div>';
+    return;
+  }
+  document.getElementById('foodList').innerHTML = keys.map(k => foodHTML(k, foods[k])).join('');
+}
+
+function catCode(c){return{Breakfast:'B',Lunch:'L',Dinner:'D',Snack:'S'}[c]||'O';}
+function catEmoji(c){return{Breakfast:'🌅',Lunch:'☀️',Dinner:'🌙',Snack:'🍟'}[c]||'🍴';}
+function esc(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+
+function foodHTML(k, f) {
+  const ings = Array.isArray(f.ingredients) ? f.ingredients : [];
+  const iH = ings.map(i =>
+    `<div class="irow">
+      <span>${i.name}${i.nameMl?`<span class="irow-ml"> · ${i.nameMl}</span>`:''}</span>
+      <span class="irqt">${i.qty} ${i.unit}</span>
+    </div>`
+  ).join('');
+  return `<div class="fc">
+  <div class="fc-hd" onclick="toggleIng('${k}')">
+    <div class="fc-em">${catEmoji(f.category)}</div>
+    <div class="fc-inf">
+      <div class="fc-nm">${f.name}</div>
+      ${f.nameMl ? `<div class="fc-nml">${f.nameMl}</div>` : ''}
+      <span class="fc-cat c${catCode(f.category)}">${f.category}</span>
+      ${f.notes ? `<div class="fc-note">${f.notes}</div>` : ''}
+    </div>
+  </div>
+  <div class="fc-acts">
+    <button class="sb sbi" onclick="toggleIng('${k}')">📋 Ingredients</button>
+    <button class="sb sbp" onclick="openPlanModal('${k}','${esc(f.name)}','${esc(f.nameMl||'')}','${f.defaultUnit||'numbers'}')">📅 Plan</button>
+    <button class="sb sbe" onclick="openEdit('${k}')">✏️ Edit</button>
+    <button class="sb sbd" onclick="delFood('${k}','${esc(f.name)}')">🗑️</button>
+  </div>
+  <div class="ip" id="ip-${k}">
+    <div class="iphd">Ingredients per serving | ഒരു സെർവിംഗിന്</div>
+    ${ings.length ? iH : '<p style="font-size:.74rem;color:var(--mid)">No ingredients added yet. Tap ✏️ Edit to add.</p>'}
+  </div>
+</div>`;
+}
+
+function toggleIng(k) { document.getElementById('ip-' + k)?.classList.toggle('on'); }
+
+function openAddFood() {
+  ['aName','aNameMl','aNotes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('aIngList').innerHTML = '';
+  document.getElementById('addModal').classList.add('on');
+}
+
+async function saveFood() {
+  const name = document.getElementById('aName').value.trim();
+  if (!name) { toast('⚠️ Enter food name'); return; }
+  const food = {
+    name, nameMl: document.getElementById('aNameMl').value.trim(),
+    category: document.getElementById('aCat').value,
+    defaultUnit: document.getElementById('aUnit').value,
+    notes: document.getElementById('aNotes').value.trim(),
+    ingredients: collectIR('aIngList'), createdAt: Date.now()
+  };
+  try {
+    const res = await fbPush('foods', food);
+    foods[res.name] = food; toast('✅ ' + name + ' saved');
+    closeMod('addModal'); renderFoods();
+  } catch(e) { toast('❌ ' + e.message); }
+}
+
+function openEdit(k) {
+  const f = foods[k]; if (!f) return;
+  document.getElementById('eId').value = k;
+  document.getElementById('eName').value = f.name;
+  document.getElementById('eNameMl').value = f.nameMl || '';
+  document.getElementById('eCat').value = f.category;
+  document.getElementById('eUnit').value = f.defaultUnit;
+  document.getElementById('eCal').value = f.caloriesPer || '';
+  document.getElementById('eNotes').value = f.notes || '';
+  const c = document.getElementById('eIngList'); c.innerHTML = '';
+  (f.ingredients || []).forEach(i => addIRow('eIngList', i));
+  document.getElementById('editModal').classList.add('on');
+}
+
+async function saveEdit() {
+  const k = document.getElementById('eId').value;
+  const food = {
+    name: document.getElementById('eName').value.trim(),
+    nameMl: document.getElementById('eNameMl').value.trim(),
+    category: document.getElementById('eCat').value,
+    defaultUnit: document.getElementById('eUnit').value,
+    caloriesPer: parseInt(document.getElementById('eCal').value) || 0,
+    notes: document.getElementById('eNotes').value.trim(),
+    ingredients: collectIR('eIngList'), updatedAt: Date.now()
+  };
+  try {
+    await fbPatch('foods/' + k, food);
+    foods[k] = {...foods[k], ...food};
+    toast('✅ Updated'); closeMod('editModal'); renderFoods();
+  } catch(e) { toast('❌ ' + e.message); }
+}
+
+async function delFood(k, name) {
+  if (!confirm('Delete "' + name + '"?')) return;
+  try { await fbDelete('foods/' + k); delete foods[k]; renderFoods(); toast('🗑️ Deleted'); }
+  catch(e) { toast('❌ ' + e.message); }
+}
+
+// ═══════════════════════════════════════
+// COPY FROM DISH
+// ═══════════════════════════════════════
+function openCopyModal(targetId) {
+  pendingCopyTarget = targetId;
+  document.getElementById('copySearch').value = '';
+  renderCopyList();
+  document.getElementById('copyModal').classList.add('on');
+}
+
+function renderCopyList() {
+  const q = (document.getElementById('copySearch').value || '').toLowerCase();
+  const keys = Object.keys(foods).filter(k => !q || foods[k].name.toLowerCase().includes(q));
+  if (!keys.length) {
+    document.getElementById('copyList').innerHTML = '<div class="em"><p>No foods with ingredients found</p></div>';
+    return;
+  }
+  document.getElementById('copyList').innerHTML = keys.map(k => {
+    const f = foods[k];
+    const ings = Array.isArray(f.ingredients) ? f.ingredients : [];
+    return `<div class="fc" style="margin-bottom:7px">
+      <div class="fc-hd" style="cursor:default">
+        <div class="fc-em">${catEmoji(f.category)}</div>
+        <div class="fc-inf">
+          <div class="fc-nm">${f.name}${f.nameMl?` <span style="font-size:.75rem;color:var(--mid)">${f.nameMl}</span>`:''}</div>
+          <div style="font-size:.72rem;color:var(--mid)">${ings.length} ingredients</div>
+        </div>
+        <button class="sb sbg" onclick="copyIngsFrom('${k}')">Copy</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function copyIngsFrom(k) {
+  const f = foods[k];
+  if (!f || !f.ingredients) { toast('No ingredients to copy'); return; }
+  const target = document.getElementById(pendingCopyTarget);
+  if (!target) return;
+  f.ingredients.forEach(i => addIRow(pendingCopyTarget, i));
+  closeMod('copyModal');
+  toast('✅ Copied ' + f.ingredients.length + ' ingredients from ' + f.name);
+}
+
+// ═══════════════════════════════════════
+// INGREDIENT ROW BUILDER (with autocomplete)
+// ═══════════════════════════════════════
+function addIRow(cid, vals = {}) {
+  const div = document.createElement('div'); div.className = 'ibr';
+  const uO = UNITS.map(u => `<option value="${u}"${u===(vals.unit||'')?'selected':''}>${u}</option>`).join('');
+  const qO = QS.map(q => `<option value="${q}"${q===(vals.qty||'1')?'selected':''}>${q}</option>`).join('');
+  const uid = 'iac_' + Date.now() + Math.random().toString(36).slice(2,6);
+  div.innerHTML = `
+    <div class="ibr-name">
+      <input type="text" class="inm" placeholder="Ingredient…" value="${vals.name||''}" autocomplete="off"
+        oninput="ingRowAC(this,'${uid}')" onblur="setTimeout(()=>closeRowAC('${uid}'),200)">
+      <div class="ing-mini-ac" id="${uid}"></div>
+    </div>
+    <select class="iqt">${qO}</select>
+    <select class="iut">${uO}</select>
+    <button class="rmbtn" onclick="this.parentElement.remove()">−</button>`;
+  document.getElementById(cid).appendChild(div);
+}
+
+function ingRowAC(inp, uid) {
+  const q = (inp.value || '').toLowerCase();
+  const drop = document.getElementById(uid);
+  if (!q || q.length < 2) { drop.classList.remove('on'); return; }
+  // combine inventory + library
+  const all = new Set();
+  Object.values(inventory).forEach(i => all.add(JSON.stringify({en:i.name, ml:i.nameMl||''})));
+  ING_LIB.forEach(i => all.add(JSON.stringify({en:i.en, ml:i.ml})));
+  const matches = [...all].map(s => JSON.parse(s))
+    .filter(i => i.en.toLowerCase().includes(q) || i.ml.includes(q))
+    .slice(0, 8);
+  if (!matches.length) { drop.classList.remove('on'); return; }
+  drop.innerHTML = matches.map(i =>
+    `<div onclick="pickRowIng(this.closest('.ibr'),'${esc(i.en)}')">
+      ${i.en} ${i.ml ? `<span class="ing-mini-ml">${i.ml}</span>` : ''}
+    </div>`
+  ).join('');
+  drop.classList.add('on');
+}
+
+function pickRowIng(row, name) {
+  row.querySelector('.inm').value = name;
+  row.querySelector('.ing-mini-ac')?.classList.remove('on');
+}
+function closeRowAC(uid) { document.getElementById(uid)?.classList.remove('on'); }
+
+function collectIR(cid) {
+  return Array.from(document.getElementById(cid).querySelectorAll('.ibr'))
+    .map(r => ({name:r.querySelector('.inm').value.trim(), qty:r.querySelector('.iqt').value, unit:r.querySelector('.iut').value}))
+    .filter(r => r.name);
+}
+
+// ═══════════════════════════════════════
+// MEAL PLAN
+// ═══════════════════════════════════════
+function shiftDay(d) {
+  const i = document.getElementById('planDate');
+  const dt = new Date(i.value + 'T12:00:00'); dt.setDate(dt.getDate() + d);
+  i.value = dt.toISOString().split('T')[0]; loadPlan();
+}
+function goToday() { document.getElementById('planDate').value = new Date().toISOString().split('T')[0]; loadPlan(); }
+
+async function loadPlan() {
+  const date = document.getElementById('planDate').value;
+  try { const data = await fbGet('mealplan/' + date); planData = data || {}; }
+  catch(e) { planData = {}; }
+  renderPlan(date);
+}
+
+function totalPpl() { return Math.max(1, Object.values(family).reduce((s,m) => s+(parseFloat(m.appetite)||1), 0)); }
+function fmtN(n) { if(Number.isInteger(n))return String(n); return parseFloat(n.toFixed(2)).toString(); }
+function qStr(w, f) {
+  const whole=parseFloat(w)||0, frac=parseFloat(f)||0;
+  if(!frac)return String(whole);
+  const fm={0.25:'1/4',0.5:'1/2',0.75:'3/4'};
+  return whole>0 ? whole+' and '+fm[frac] : fm[frac];
+}
+
+function renderPlan(date) {
+  const meals = ['Breakfast','Lunch','Dinner','Snack'];
+  const ico = {Breakfast:'🌅 Breakfast | പ്രഭാത ഭക്ഷണം', Lunch:'☀️ Lunch | ഉച്ചഭക്ഷണം', Dinner:'🌙 Dinner | അത്താഴം', Snack:'🍟 Snack | ലഘുഭക്ഷണം'};
+  const lbl = new Date(date + 'T12:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
+  const famKeys = Object.keys(family);
+  const ppl = totalPpl();
+
+  let html = `<div style="font-size:.78rem;font-weight:700;color:var(--mid);margin-bottom:10px">
+    ${lbl} · <span style="color:var(--clay)">${famKeys.length ? famKeys.length+' members' : 'Add family in ⚙️ Setup'}</span>
+  </div>`;
+
+  meals.forEach(meal => {
+    const items = planData[meal] ? Object.entries(planData[meal]) : [];
+    html += `<div class="mb">
+      <div class="mbhd">
+        <span class="mblbl">${ico[meal]}</span>
+        <button class="sb sbp" style="padding:4px 9px;font-size:.66rem" onclick="openPlanModalForMeal('${meal}')">+ Add</button>
+      </div>
+      <div class="mbbody">`;
+
+    if (!items.length) {
+      html += `<div class="em-meal">Nothing planned — tap + Add | ഒന്നും ആസൂത്രണം ചെയ്തിട്ടില്ല</div>`;
+    } else {
+      items.forEach(([key, it]) => {
+        // Per-member portion (editable)
+        const memberPortions = it.memberPortions || {};
+        let totalPortions = 0;
+
+        let portionRows = '';
+        if (famKeys.length > 0) {
+          portionRows = famKeys.map(fk => {
+            const mem = family[fk];
+            const defW = parseFloat(it.wholeQty) || 1;
+            const defF = parseFloat(it.fracQty) || 0;
+            const memPort = memberPortions[fk] || {w: defW * (parseFloat(mem.appetite)||1), f: 0};
+            const portVal = (parseFloat(memPort.w)||0) + (parseFloat(memPort.f)||0);
+            totalPortions += portVal;
+            const wOpts = ['0','1','2','3','4','5','6','7','8','10','12','15','20'].map(v =>
+              `<option value="${v}" ${Math.round(parseFloat(memPort.w)||defW)==v?'selected':''}>${v}</option>`
+            ).join('');
+            const fOpts = `<option value="0" ${!(memPort.f>0)?'selected':''}>—</option>
+              <option value="0.25" ${memPort.f==0.25?'selected':''}>+¼</option>
+              <option value="0.5" ${memPort.f==0.5?'selected':''}>+½</option>
+              <option value="0.75" ${memPort.f==0.75?'selected':''}>+¾</option>`;
+            return `<div class="port-member">
+              <span>${mem.name}</span>
+              <select class="port-select" onchange="updateMemberPortion('${date}','${meal}','${key}','${fk}','w',this.value)">${wOpts}</select>
+              <select class="port-frac" onchange="updateMemberPortion('${date}','${meal}','${key}','${fk}','f',this.value)">${fOpts}</select>
+            </div>`;
+          }).join('');
+        } else {
+          totalPortions = (parseFloat(it.wholeQty)||1) + (parseFloat(it.fracQty)||0);
+        }
+
+        html += `<div class="mi">
+          <div class="mi-top">
+            <div>
+              <div class="mi-nm">${it.foodName}</div>
+              ${it.foodNameMl ? `<div class="mi-nml">${it.foodNameMl}</div>` : ''}
+            </div>
+            <div class="mi-total">Total: <b>${fmtN(totalPortions)} ${it.unit}</b></div>
+            <button class="mi-dl" onclick="removePlanItem('${date}','${meal}','${key}')">✕</button>
+          </div>
+          ${famKeys.length > 0 ? `
+          <div class="mi-portions">
+            <label>Portions per person:</label>
+            ${portionRows}
+          </div>` : ''}
+        </div>`;
+      });
+
+      // Ingredient summary
+      const tots = items.map(([key, it]) => {
+        let total = 0;
+        if (famKeys.length > 0) {
+          const memberPortions = it.memberPortions || {};
+          famKeys.forEach(fk => {
+            const mem = family[fk];
+            const mp = memberPortions[fk] || {w:(parseFloat(it.wholeQty)||1)*(parseFloat(mem.appetite)||1), f:0};
+            total += (parseFloat(mp.w)||0) + (parseFloat(mp.f)||0);
+          });
+        } else {
+          total = (parseFloat(it.wholeQty)||1) + (parseFloat(it.fracQty)||0);
+        }
+        return {it, total};
+      });
+      const ingNeeded = calcIngNeeded(tots);
+      if (ingNeeded.length) {
+        html += `<div class="ing-sum"><div class="ing-sum-hd">🧺 Ingredients needed | ആവശ്യമുള്ള ചേരുവകൾ</div>`;
+        ingNeeded.forEach(i => {
+          const inv = findInv(i.name);
+          const st = inv ? parseFloat(inv.stock)||0 : -1;
+          const ok = st >= i.total, low = st >= 0 && st < i.total;
+          const ingLib = ING_LIB.find(l => l.en.toLowerCase() === i.name.toLowerCase());
+          html += `<div class="inrow">
+            <span>${i.name}${ingLib?`<span class="inrow-ml"> ${ingLib.ml}</span>`:''}</span>
+            <span class="${ok?'c-ok':low?'c-lw':'c-no'}">${fmtN(i.total)} ${i.unit} ${ok?'✓':low?'⚠️':'✗'}</span>
+          </div>`;
+        });
+        html += `</div>`;
+      }
+    }
+    html += `</div></div>`;
+  });
+  document.getElementById('planArea').innerHTML = html;
+}
+
+async function updateMemberPortion(date, meal, itemKey, famKey, field, value) {
+  try {
+    const path = `mealplan/${date}/${meal}/${itemKey}/memberPortions/${famKey}`;
+    await fbPatch(path, {[field]: parseFloat(value)||0});
+    if (!planData[meal]) planData[meal] = {};
+    if (!planData[meal][itemKey]) planData[meal][itemKey] = {};
+    if (!planData[meal][itemKey].memberPortions) planData[meal][itemKey].memberPortions = {};
+    if (!planData[meal][itemKey].memberPortions[famKey]) planData[meal][itemKey].memberPortions[famKey] = {};
+    planData[meal][itemKey].memberPortions[famKey][field] = parseFloat(value)||0;
+    // re-render just the plan totals
+    renderPlan(date);
+  } catch(e) { toast('❌ ' + e.message); }
+}
+
+function calcIngNeeded(tots) {
+  const map = {};
+  tots.forEach(({it, total}) => {
+    const f = Object.values(foods).find(fd => fd.name === it.foodName);
+    if (!f || !f.ingredients) return;
+    f.ingredients.forEach(ing => {
+      const needed = (parseFloat(ing.qty)||0) * total;
+      const key = ing.name + '__' + ing.unit;
+      if (!map[key]) map[key] = {name:ing.name, unit:ing.unit, total:0};
+      map[key].total += needed;
+    });
+  });
+  return Object.values(map);
+}
+
+function findInv(name) { return Object.values(inventory).find(i => i.name.toLowerCase() === name.toLowerCase()); }
+
+function openPlanModal(key, name, nameMl, unit) {
+  pendingFood = {key, name, nameMl, unit};
+  document.getElementById('planTitle').textContent = name;
+  document.getElementById('planSubtitle').textContent = nameMl || '';
+  document.getElementById('pmU').value = unit || 'numbers';
+  document.getElementById('pmDate').value = document.getElementById('planDate').value;
+  const famKeys = Object.keys(family);
+  const fi = document.getElementById('pmFamInfo');
+  fi.textContent = famKeys.length > 0
+    ? '👨‍👩‍👧‍👦 ' + famKeys.length + ' members: ' + Object.values(family).map(m=>m.name).join(', ') + ' — you can edit each person\'s portion in the plan.'
+    : '💡 Add family members in ⚙️ Setup to set portions per person.';
+  document.getElementById('planModal').classList.add('on');
+}
+
+function openPlanModalForMeal(meal) {
+  document.getElementById('pmMeal').value = meal;
+  toast('Select a food from 🥘 Foods → tap 📅 Plan');
+  sw('foods', document.querySelector('.tab'));
+}
+
+async function confirmPlan() {
+  if (!pendingFood) return;
+  const date = document.getElementById('pmDate').value;
+  const meal = document.getElementById('pmMeal').value;
+  const wQ = document.getElementById('pmW').value;
+  const fQ = document.getElementById('pmF').value;
+  const unit = document.getElementById('pmU').value;
+  // build default member portions
+  const memberPortions = {};
+  Object.entries(family).forEach(([fk, m]) => {
+    const def = (parseFloat(wQ)||1) * (parseFloat(m.appetite)||1);
+    memberPortions[fk] = {w: Math.floor(def), f: parseFloat((def % 1).toFixed(2))};
+  });
+  try {
+    const entry = {foodKey:pendingFood.key, foodName:pendingFood.name, foodNameMl:pendingFood.nameMl||'', wholeQty:wQ, fracQty:fQ, unit, memberPortions, addedAt:Date.now()};
+    const res = await fbPush('mealplan/' + date + '/' + meal, entry);
+    if (!planData[meal]) planData[meal] = {};
+    planData[meal][res.name] = entry;
+    toast('📅 ' + pendingFood.name + ' added to ' + meal);
+    closeMod('planModal');
+    document.getElementById('planDate').value = date;
+    renderPlan(date);
+  } catch(e) { toast('❌ ' + e.message); }
+}
+
+async function removePlanItem(date, meal, itemKey) {
+  try {
+    await fbDelete('mealplan/' + date + '/' + meal + '/' + itemKey);
+    delete planData[meal][itemKey]; renderPlan(date); toast('Removed');
+  } catch(e) { toast('❌ ' + e.message); }
+}
+
+// ═══════════════════════════════════════
+// INVENTORY
+// ═══════════════════════════════════════
+function renderInventory() {
+  const q = (document.getElementById('invSearch')?.value || '').toLowerCase();
+  const keys = Object.keys(inventory).filter(k => !q || inventory[k].name.toLowerCase().includes(q) || (inventory[k].nameMl||'').includes(q));
+  if (!keys.length) {
+    document.getElementById('invList').innerHTML = `<div class="em"><div class="ei">🧺</div><h3>Stock empty | സ്റ്റോക്ക് ഒഴിഞ്ഞിരിക്കുന്നു</h3><p>Add ingredients to track</p></div>
+    <button class="btn" onclick="openAddIngModal()" style="margin-top:8px">+ Add First Ingredient</button>`;
+    return;
+  }
+  document.getElementById('invList').innerHTML = keys.map(k => invHTML(k, inventory[k])).join('');
+}
+
+function invHTML(k, i) {
+  const st=parseFloat(i.stock)||0, mn=parseFloat(i.minLevel)||100;
+  const pct=Math.min(100,(st/Math.max(mn*2,1))*100);
+  const isOut=st===0, isLow=st<mn;
+  const bc=isOut?'stx':isLow?'stl':'sto', sc=isOut?'c-r':isLow?'c-y':'c-g', sl=isOut?'Out of stock':isLow?'Low stock':'In stock';
+  const ingLib = ING_LIB.find(l => l.en.toLowerCase() === i.name.toLowerCase());
+  const mlName = i.nameMl || (ingLib ? ingLib.ml : '');
+  return `<div class="inv-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div><div style="font-weight:800;font-size:.86rem">${i.name}</div>
+        ${mlName ? `<div style="font-size:.73rem;color:var(--mid)">${mlName}</div>` : ''}
+        <div style="font-size:.7rem;color:var(--mid);margin-top:2px">Alert: ${mn} ${i.unit}</div></div>
+      <div style="text-align:right">
+        <div style="font-size:.98rem;font-weight:800;color:var(--clay)">${fmtN(st)} ${i.unit}</div>
+        <div class="stlbl ${sc}">${sl}</div>
+      </div>
+    </div>
+    <div class="stbar"><div class="stfill ${bc}" style="width:${pct}%"></div></div>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <button class="sb sbe" onclick="updateStock('${k}',${st},'${i.unit}')">📝 Update</button>
+      <button class="sb sbd" onclick="delIng('${k}','${esc(i.name)}')">🗑️</button>
+    </div>
+  </div>`;
+}
+
+function openAddIngModal() {
+  document.getElementById('ingName').value = '';
+  document.getElementById('ingNameMl').value = '';
+  document.getElementById('ingAcDrop').classList.remove('on');
+  document.getElementById('addIngModal').classList.add('on');
+}
+
+function ingAcSearch() {
+  const q = (document.getElementById('ingName').value || '').toLowerCase();
+  const drop = document.getElementById('ingAcDrop');
+  if (!q || q.length < 2) { drop.classList.remove('on'); return; }
+  const all = new Set();
+  Object.values(inventory).forEach(i => all.add(JSON.stringify({en:i.name, ml:i.nameMl||''})));
+  ING_LIB.forEach(i => all.add(JSON.stringify({en:i.en, ml:i.ml})));
+  const cur = document.getElementById('ingName').value.trim();
+  const matches = [...all].map(s=>JSON.parse(s)).filter(i=>i.en.toLowerCase().includes(q)||i.ml.includes(q)).slice(0,10);
+  const addNew = !matches.find(i => i.en.toLowerCase() === q);
+  drop.innerHTML = [
+    ...matches.map(i => `<div class="ac-item" onclick="pickIngAC('${esc(i.en)}','${esc(i.ml)}')">
+      <div class="ac-en">${i.en}</div>${i.ml?`<div class="ac-ml">${i.ml}</div>`:''}</div>`),
+    addNew ? `<div class="ac-item acnew" onclick="pickIngAC('${esc(cur)}','')"><div class="ac-en ac-new">➕ Add "${cur}"</div></div>` : ''
+  ].join('');
+  drop.classList.add('on');
+}
+function pickIngAC(name, ml) {
+  document.getElementById('ingName').value = name;
+  if (ml) document.getElementById('ingNameMl').value = ml;
+  document.getElementById('ingAcDrop').classList.remove('on');
+}
+function closeIngAC() { document.getElementById('ingAcDrop')?.classList.remove('on'); }
+
+async function saveIngredient() {
+  const name = document.getElementById('ingName').value.trim();
+  if (!name) { toast('⚠️ Enter ingredient name'); return; }
+  const nameMl = document.getElementById('ingNameMl').value.trim() || (ING_LIB.find(i=>i.en.toLowerCase()===name.toLowerCase())||{}).ml || '';
+  const w = parseFloat(document.getElementById('ingW').value)||0;
+  const f = parseFloat(document.getElementById('ingF').value)||0;
+  const stock = w+f, unit = document.getElementById('ingU').value;
+  const minLevel = parseFloat(document.getElementById('ingMin').value)||100;
+  const existing = Object.keys(inventory).find(k => inventory[k].name.toLowerCase() === name.toLowerCase());
+  try {
+    if (existing) {
+      await fbPatch('inventory/' + existing, {stock, unit, minLevel, updatedAt:Date.now()});
+      inventory[existing] = {...inventory[existing], stock, unit, minLevel};
+      toast('✅ ' + name + ' updated');
+    } else {
+      const obj = {name, nameMl, stock, unit, minLevel, createdAt:Date.now()};
+      const res = await fbPush('inventory', obj);
+      inventory[res.name] = obj;
+      toast('✅ ' + name + ' added');
+    }
+    closeMod('addIngModal'); renderInventory();
+  } catch(e) { toast('❌ ' + e.message); }
+}
+
+async function updateStock(k, cur, unit) {
+  const n = prompt('Update stock for ' + inventory[k].name + '\nCurrent: ' + cur + ' ' + unit + '\nNew amount:', cur);
+  if (n === null) return;
+  const val = parseFloat(n); if (isNaN(val)) { toast('Invalid number'); return; }
+  try { await fbPatch('inventory/' + k, {stock:val, updatedAt:Date.now()}); inventory[k].stock=val; renderInventory(); toast('✅ Updated'); }
+  catch(e) { toast('❌ ' + e.message); }
+}
+
+async function delIng(k, name) {
+  if (!confirm('Delete "' + name + '"?')) return;
+  try { await fbDelete('inventory/' + k); delete inventory[k]; renderInventory(); toast('🗑️ Deleted'); }
+  catch(e) { toast('❌ ' + e.message); }
+}
+
+// ═══════════════════════════════════════
+// SUGGESTIONS
+// ═══════════════════════════════════════
+function generateSuggestions() {
+  const area = document.getElementById('sugArea');
+  if (!Object.keys(foods).length) { area.innerHTML='<div class="em"><div class="ei">🍽️</div><h3>No foods yet</h3><p>Load default foods first</p></div>'; return; }
+  const sugs = [];
+  Object.entries(foods).forEach(([k,f]) => {
+    if (!f.ingredients||!f.ingredients.length) { sugs.push({name:f.name,ml:f.nameMl||'',cat:f.category,status:'ok',reason:'No ingredient list — can probably make it!'}); return; }
+    const missing=[], low=[];
+    f.ingredients.forEach(ing => {
+      const inv = findInv(ing.name);
+      if (!inv||parseFloat(inv.stock)===0) missing.push(ing.name);
+      else if (parseFloat(inv.stock)<(parseFloat(inv.minLevel)||100)) low.push(ing.name);
+    });
+    if (!missing.length&&!low.length) sugs.push({name:f.name,ml:f.nameMl||'',cat:f.category,status:'ok',reason:'All ingredients in stock ✓'});
+    else if (!missing.length) sugs.push({name:f.name,ml:f.nameMl||'',cat:f.category,status:'warn',reason:'Low on: '+low.join(', ')});
+    else sugs.push({name:f.name,ml:f.nameMl||'',cat:f.category,status:'bad',reason:'Missing: '+missing.join(', ')});
+  });
+  sugs.sort((a,b)=>({ok:0,warn:1,bad:2}[a.status]-{ok:0,warn:1,bad:2}[b.status]));
+  area.innerHTML = sugs.map(s=>`<div class="sug-card">
+    <h3>${catEmoji(s.cat)} ${s.name}${s.ml?` <span style="font-size:.75rem;font-weight:400;color:var(--mid)">${s.ml}</span>`:''}</h3>
+    <p>${s.reason}</p>
+    <span class="stag ${s.status==='ok'?'tg':s.status==='warn'?'tw':'tr'}">${s.status==='ok'?'✅ Can cook now':s.status==='warn'?'⚠️ Low stock':'❌ Missing ingredients'}</span>
+  </div>`).join('');
+}
+
+// ═══════════════════════════════════════
+// FAMILY
+// ═══════════════════════════════════════
+function renderFamily() {
+  const keys = Object.keys(family); const el = document.getElementById('famList'); if(!el)return;
+  if(!keys.length){el.innerHTML='<div class="em" style="padding:12px 0"><p style="font-size:.76rem">No members yet. Add your family to set per-person portions.</p></div>';return;}
+  el.innerHTML = keys.map(k=>`<div class="fam-row">
+    <div><div class="fam-nm">${family[k].name}</div><div class="fam-nml">${family[k].nameMl||''}</div></div>
+    <span class="fam-ag">Age ${family[k].age||'?'} · Default ${family[k].appetite}×</span>
+    <button class="fam-dl" onclick="delFam('${k}')">✕</button>
+  </div>`).join('');
+}
+function openFamModal(){document.getElementById('famModal').classList.add('on');}
+async function saveFamMember(){
+  const name=document.getElementById('famName').value.trim();if(!name){toast('⚠️ Enter name');return;}
+  const obj={name,age:document.getElementById('famAge').value,appetite:document.getElementById('famApp').value,createdAt:Date.now()};
+  try{const res=await fbPush('family',obj);family[res.name]=obj;renderFamily();closeMod('famModal');document.getElementById('famName').value='';document.getElementById('famAge').value='';toast('✅ '+name+' added');}catch(e){toast('❌ '+e.message);}
+}
+async function delFam(k){try{await fbDelete('family/'+k);delete family[k];renderFamily();toast('Removed');}catch(e){toast('❌ '+e.message);}}
+
+// ═══════════════════════════════════════
+// SEED DEFAULT FOODS
+// ═══════════════════════════════════════
+async function seedFoods(){
+  if(!confirm('Add 10 default Kerala foods to Firebase?'))return;
+  toast('🌱 Seeding…');
+  const defaults=[
+    {name:"Idli",nameMl:"ഇഡ്ഡലി",category:"Breakfast",defaultUnit:"numbers",caloriesPer:39,notes:"Steamed rice cake",ingredients:[{name:"Idli rice",qty:"2",unit:"cups"},{name:"Urad dal",qty:"1/2",unit:"cups"},{name:"Salt",qty:"1",unit:"tsp"},{name:"Water",qty:"as needed",unit:""}]},
+    {name:"Puttu",nameMl:"പുട്ട്",category:"Breakfast",defaultUnit:"numbers",caloriesPer:93,notes:"Steamed rice cylinders layered with coconut",ingredients:[{name:"Puttu podi",qty:"2",unit:"cups"},{name:"Grated coconut",qty:"1/2",unit:"cups"},{name:"Salt",qty:"1/2",unit:"tsp"},{name:"Water",qty:"3/4",unit:"cups"}]},
+    {name:"Dosa",nameMl:"ദോശ",category:"Breakfast",defaultUnit:"numbers",caloriesPer:133,notes:"Crispy fermented rice crepe",ingredients:[{name:"Raw rice",qty:"3",unit:"cups"},{name:"Urad dal",qty:"1",unit:"cups"},{name:"Salt",qty:"1",unit:"tsp"},{name:"Oil",qty:"2",unit:"tbsp"}]},
+    {name:"Egg Omelette",nameMl:"മുട്ട ഒംലറ്റ്",category:"Breakfast",defaultUnit:"numbers",caloriesPer:154,notes:"Pan fried egg with onion and green chilli",ingredients:[{name:"Eggs",qty:"2",unit:"numbers"},{name:"Onion",qty:"1/4",unit:"cups"},{name:"Green chilli",qty:"1",unit:"numbers"},{name:"Salt",qty:"1/4",unit:"tsp"},{name:"Oil",qty:"1",unit:"tsp"}]},
+    {name:"Boiled Egg",nameMl:"വേവിച്ച മുട്ട",category:"Breakfast",defaultUnit:"numbers",caloriesPer:78,notes:"Hard boiled egg",ingredients:[{name:"Eggs",qty:"1",unit:"numbers"},{name:"Water",qty:"as needed",unit:""}]},
+    {name:"Egg Curry",nameMl:"മുട്ട കറി",category:"Lunch",defaultUnit:"servings",caloriesPer:210,notes:"Kerala style egg curry with coconut milk",ingredients:[{name:"Eggs",qty:"4",unit:"numbers"},{name:"Onion",qty:"2",unit:"numbers"},{name:"Tomato",qty:"1",unit:"numbers"},{name:"Coconut milk",qty:"1",unit:"cups"},{name:"Coconut oil",qty:"2",unit:"tbsp"},{name:"Turmeric",qty:"1/2",unit:"tsp"},{name:"Chilli powder",qty:"1",unit:"tsp"}]},
+    {name:"Rice",nameMl:"ചോറ്",category:"Lunch",defaultUnit:"cups",caloriesPer:206,notes:"Cooked Kerala matta rice",ingredients:[{name:"Rice",qty:"1",unit:"cups"},{name:"Water",qty:"2",unit:"cups"},{name:"Salt",qty:"1/4",unit:"tsp"}]},
+    {name:"Mathan Curry",nameMl:"മത്തൻ കറി",category:"Lunch",defaultUnit:"servings",caloriesPer:120,notes:"Yellow pumpkin curry in coconut gravy",ingredients:[{name:"Yellow pumpkin",qty:"500",unit:"g"},{name:"Grated coconut",qty:"1",unit:"cups"},{name:"Green chilli",qty:"2",unit:"numbers"},{name:"Coconut oil",qty:"1",unit:"tbsp"},{name:"Turmeric",qty:"1/4",unit:"tsp"}]},
+    {name:"Pulissery",nameMl:"പുളിശ്ശേരി",category:"Lunch",defaultUnit:"servings",caloriesPer:98,notes:"Yogurt-based Kerala curry with coconut",ingredients:[{name:"Curd",qty:"1",unit:"cups"},{name:"Grated coconut",qty:"3/4",unit:"cups"},{name:"Turmeric",qty:"1/4",unit:"tsp"},{name:"Coconut oil",qty:"1",unit:"tsp"},{name:"Mustard seeds",qty:"1/2",unit:"tsp"},{name:"Curry leaves",qty:"1",unit:"sprig"}]},
+    {name:"Chicken Curry",nameMl:"കോഴി കറി",category:"Lunch",defaultUnit:"servings",caloriesPer:280,notes:"Kerala style chicken curry",ingredients:[{name:"Chicken",qty:"500",unit:"g"},{name:"Onion",qty:"3",unit:"numbers"},{name:"Tomato",qty:"2",unit:"numbers"},{name:"Coconut oil",qty:"3",unit:"tbsp"},{name:"Garam masala",qty:"1",unit:"tsp"},{name:"Curry leaves",qty:"2",unit:"sprig"},{name:"Ginger-garlic paste",qty:"1",unit:"tbsp"}]}
+  ];
+  try{for(const f of defaults){const res=await fbPush('foods',{...f,createdAt:Date.now()});foods[res.name]=f;}renderFoods();toast('✅ 10 Kerala foods loaded!');}catch(e){toast('❌ '+e.message);}
+}
+
+// ═══════════════════════════════════════
+// ANTHROPIC API KEY
+// ═══════════════════════════════════════
+function saveAnthropicKey() {
+  const key = document.getElementById('anthropicKey').value.trim();
+  localStorage.setItem('kkAnthropicKey', key);
+  const st = document.getElementById('apiKeyStatus');
+  if (key.startsWith('sk-ant-')) { st.textContent = '✅ Key saved — photo scanning enabled'; st.style.color = '#16A34A'; }
+  else if (key) { st.textContent = '⚠️ Key should start with sk-ant-…'; st.style.color = '#E8A020'; }
+  else { st.textContent = ''; }
+}
+function getAnthropicKey() { return localStorage.getItem('kkAnthropicKey') || ''; }
+
+// Init: load saved key
+document.addEventListener('DOMContentLoaded', () => {
+  const k = getAnthropicKey();
+  const el = document.getElementById('anthropicKey');
+  if (el && k) { el.value = k; saveAnthropicKey(); }
+});
+
+// ═══════════════════════════════════════
+// PHOTO SCAN — Claude Vision
+// ═══════════════════════════════════════
+let scannedItems = [];
+function openScanModal() { document.getElementById('scanModal').classList.add('on'); }
+
+function handleScanFile(input) {
+  const file = input.files[0]; if (!file) return;
+  const key = getAnthropicKey();
+  if (!key) { toast('⚠️ Add Anthropic API key in ⚙️ Setup first'); sw('set', document.querySelectorAll('.tab')[4]); return; }
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result.split(',')[1];
+    const mediaType = file.type || 'image/jpeg';
+    document.getElementById('scanModal').classList.add('on');
+    document.getElementById('scanContent').innerHTML =
+      '<img src="' + e.target.result + '" class="scan-preview">' +
+      '<div class="scanning-state"><div class="scan-spin"></div><div style="font-weight:700;font-size:.86rem">Reading with Claude AI…</div>' +
+      '<div style="font-size:.74rem;margin-top:4px;color:var(--mid)">Identifying items from your photo</div></div>';
+    await scanImageWithClaude(base64, mediaType, e.target.result);
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+async function scanImageWithClaude(base64, mediaType, previewSrc) {
+  const key = getAnthropicKey();
+  const prompt = 'Analyze this grocery delivery screenshot or bill from India. Extract ALL food/grocery items. For each item return: name (English), nameMl (Malayalam if known, else empty string), qty (number, convert kg to g, litre to mL), unit (one of: g, kg, mL, litre, numbers, cups, pack). Return ONLY a valid JSON array with no other text. Example: [{"name":"Onion","nameMl":"\u0d09\u0d33\u0d4d\u0d33\u0d3f","qty":900,"unit":"g"}]';
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-calls': 'true' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1024,
+        messages: [{ role: 'user', content: [
+          { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
+          { type: 'text', text: prompt }
+        ]}]
+      })
+    });
+    if (!response.ok) { const err = await response.json(); throw new Error(err.error?.message || 'API error ' + response.status); }
+    const data = await response.json();
+    const text = data.content[0]?.text || '[]';
+    const s = text.indexOf('['), en = text.lastIndexOf(']');
+    if (s === -1) throw new Error('No items detected in image');
+    scannedItems = JSON.parse(text.slice(s, en + 1));
+    scannedItems = scannedItems.map(item => {
+      if (!item.nameMl) { const lib = ING_LIB.find(l => l.en.toLowerCase() === item.name.toLowerCase()); if (lib) item.nameMl = lib.ml; }
+      item.selected = true; return item;
+    });
+    renderScanResults(previewSrc);
+  } catch(e) {
+    document.getElementById('scanContent').innerHTML =
+      '<img src="' + previewSrc + '" class="scan-preview">' +
+      '<div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;padding:12px;font-size:.78rem;color:#991B1B;margin-top:8px">' +
+      '❌ Scan failed: ' + e.message + '<br><br><b>Fix:</b> Check API key in ⚙️ Setup · Use a clear well-lit photo</div>';
+  }
+}
+
+function renderScanResults(previewSrc) {
+  if (!scannedItems.length) { document.getElementById('scanContent').innerHTML = '<img src="' + previewSrc + '" class="scan-preview"><div class="em"><div class="ei">🤔</div><h3>No items found</h3><p>Try a clearer photo of the bill</p></div>'; return; }
+  const uOpts = (sel) => ['g','kg','mL','litre','numbers','cups','tbsp','tsp','pack'].map(u => '<option value="' + u + '"' + (u===sel?' selected':'') + '>' + u + '</option>').join('');
+  document.getElementById('scanContent').innerHTML =
+    '<img src="' + previewSrc + '" class="scan-preview">' +
+    '<div style="font-size:.78rem;font-weight:700;color:var(--leaf);margin-bottom:8px">✅ Found ' + scannedItems.length + ' items — tap ✓ to deselect any you do not want</div>' +
+    '<div id="scanResultList">' +
+    scannedItems.map((item, idx) =>
+      '<div class="scan-result-item">' +
+      '<div class="sri-check on" id="check-' + idx + '" onclick="toggleScanItem(' + idx + ')">✓</div>' +
+      '<div class="sri-info">' +
+      '<div class="sri-name">' + item.name + '</div>' +
+      (item.nameMl ? '<div class="sri-ml">' + item.nameMl + '</div>' : '') +
+      '<div class="sri-qty"><input type="number" value="' + item.qty + '" min="0" step="any" onchange="scannedItems[' + idx + '].qty=parseFloat(this.value)||0"><select onchange="scannedItems[' + idx + '].unit=this.value">' + uOpts(item.unit) + '</select></div>' +
+      '</div></div>'
+    ).join('') + '</div>' +
+    '<button class="btn" onclick="addScannedToInventory()" style="margin-top:12px">✅ Add Selected to Stock</button>' +
+    '<button class="btn2" onclick="closeMod('scanModal')" style="margin-top:6px">Cancel</button>';
+}
+
+function toggleScanItem(idx) {
+  scannedItems[idx].selected = !scannedItems[idx].selected;
+  const c = document.getElementById('check-' + idx);
+  c.classList.toggle('on', scannedItems[idx].selected);
+  c.textContent = scannedItems[idx].selected ? '✓' : '';
+}
+
+async function addScannedToInventory() {
+  const selected = scannedItems.filter(i => i.selected);
+  if (!selected.length) { toast('⚠️ Select at least one item'); return; }
+  toast('💾 Saving ' + selected.length + ' items…');
+  let added = 0, updated = 0;
+  for (const item of selected) {
+    const existing = Object.keys(inventory).find(k => inventory[k].name.toLowerCase() === item.name.toLowerCase());
+    try {
+      if (existing) {
+        const newStock = (parseFloat(inventory[existing].stock)||0) + (parseFloat(item.qty)||0);
+        await fbPatch('inventory/' + existing, {stock: newStock, updatedAt: Date.now()});
+        inventory[existing].stock = newStock; updated++;
+      } else {
+        const obj = {name:item.name, nameMl:item.nameMl||'', stock:parseFloat(item.qty)||0, unit:item.unit, minLevel:100, createdAt:Date.now()};
+        const res = await fbPush('inventory', obj);
+        inventory[res.name] = obj; added++;
+      }
+    } catch(e) { console.error(e); }
+  }
+  renderInventory(); closeMod('scanModal');
+  toast('✅ Added ' + added + ' new · Updated ' + updated + ' items');
+}
+
+
+// ═══════════════════════════════════════
+// NAV & MODALS
+// ═══════════════════════════════════════
+function sw(name,el){
+  document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('pnl-'+name).classList.add('on');
+  if(el)el.classList.add('on');
+  if(name==='plan')loadPlan();
+  if(name==='sug')generateSuggestions();
+}
+function closeMod(id){document.getElementById(id).classList.remove('on');pendingFood=null;pendingCopyTarget=null;}
+['planModal','editModal','addModal','addIngModal','famModal','copyModal','scanModal'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeMod(id);});
+});
+let tt;
+function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),2800);}
+</script>
+</body>
+</html>
