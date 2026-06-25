@@ -207,21 +207,33 @@ textarea{resize:vertical;min-height:55px}
     <button class="dnb tdb" onclick="goToday()">Today</button>
     <button class="dnb" onclick="shiftDay(1)">▶</button>
   </div>
+  <div style="display:flex;gap:7px;margin-bottom:12px">
+    <button class="btn2" style="margin:0;font-size:.76rem" onclick="openCopyPlanModal()">📋 Copy Plan to Another Day</button>
+    <button class="btn2" style="margin:0;font-size:.76rem" onclick="openCopyWeekModal()">📅 Copy Week</button>
+  </div>
   <div id="planArea"><div class="ld"><div class="spin"></div>Loading…</div></div>
 </div>
 
 <!-- INVENTORY -->
 <div id="pnl-inv" class="pnl">
   <div class="rh"><h2>🧺 Stock | സ്റ്റോക്ക്</h2>
-    <div style="display:flex;gap:6px">
-      <button class="sb sbg" onclick="openScanModal()">📷 Scan</button>
-      <button class="sb sbp" onclick="openAddIngModal()">+ Add</button>
-    </div>
+    <button class="sb sbp" onclick="openInvMethodModal()">+ Add Stock</button>
   </div>
-  <div class="scanbox" onclick="document.getElementById('scanFile').click()">
-    <input type="file" id="scanFile" accept="image/*" style="display:none" onchange="handleScan(this)">
-    <h3>📷 Scan Grocery Bill</h3>
-    <p>Upload photo → Claude AI reads items → updates stock automatically</p>
+  <input type="file" id="scanFile" accept="image/*" style="display:none" onchange="handleScan(this)">
+  <!-- Quick add methods -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:12px">
+    <div onclick="document.getElementById('scanFile').click()" style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer">
+      <div style="font-size:1.3rem">📷</div>
+      <div style="font-size:.66rem;font-weight:700;color:#92400E;margin-top:3px">Scan Bill</div>
+    </div>
+    <div onclick="openTextListModal()" style="background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer">
+      <div style="font-size:1.3rem">📝</div>
+      <div style="font-size:.66rem;font-weight:700;color:#1D4ED8;margin-top:3px">Paste List</div>
+    </div>
+    <div onclick="openAddIngModal()" style="background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer">
+      <div style="font-size:1.3rem">✍️</div>
+      <div style="font-size:.66rem;font-weight:700;color:var(--leaf);margin-top:3px">Manual</div>
+    </div>
   </div>
   <div class="ssrch"><input id="invSearch" placeholder="Search ingredients | ചേരുവകൾ…" oninput="renderInv()" autocomplete="off"></div>
   <div id="invList"><div class="ld"><div class="spin"></div>Loading…</div></div>
@@ -390,6 +402,76 @@ textarea{resize:vertical;min-height:55px}
   </div>
 </div>
 
+<!-- COPY DAY PLAN MODAL -->
+<div class="ov" id="copyPlanModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>📋 Copy Day's Plan</h3><p>Copy all meals from one day to another</p></div><button class="cls" onclick="closeMod('copyPlanModal')">✕</button></div>
+    <div class="fg"><label>Copy FROM date</label><input type="date" id="cpFromDate"></div>
+    <div class="fg"><label>Copy TO date</label><input type="date" id="cpToDate"></div>
+    <div style="font-size:.76rem;color:var(--mid);margin-bottom:10px">Existing meals on the target date will be kept. Copied meals will be added.</div>
+    <button class="btn" onclick="copyDayPlan()">📋 Copy Meals</button>
+  </div>
+</div>
+
+<!-- COPY WEEK PLAN MODAL -->
+<div class="ov" id="copyWeekModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>📅 Copy Entire Week</h3><p>Copy all 7 days of a week to another week</p></div><button class="cls" onclick="closeMod('copyWeekModal')">✕</button></div>
+    <div class="fg"><label>Copy week starting from</label><input type="date" id="cwFromDate"></div>
+    <div class="fg"><label>Copy to week starting from</label><input type="date" id="cwToDate"></div>
+    <div style="font-size:.76rem;color:var(--mid);margin-bottom:10px">All 7 days of meals will be copied. Days with existing meals will have new meals added.</div>
+    <button class="btn" onclick="copyWeekPlan()">📅 Copy Week</button>
+  </div>
+</div>
+
+<!-- INVENTORY INPUT METHODS -->
+<div class="ov" id="invMethodModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>🧺 Add to Stock</h3><p>Choose how to add ingredients</p></div><button class="cls" onclick="closeMod('invMethodModal')">✕</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
+      <div onclick="closeMod('invMethodModal');openAddIngModal()" style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:12px;padding:14px;text-align:center;cursor:pointer">
+        <div style="font-size:1.8rem">✍️</div>
+        <div style="font-size:.8rem;font-weight:700;color:var(--leaf);margin-top:5px">Type manually</div>
+        <div style="font-size:.69rem;color:var(--mid);margin-top:2px">Add one item at a time</div>
+      </div>
+      <div onclick="closeMod('invMethodModal');document.getElementById('scanFile').click()" style="background:#FFF7ED;border:2px solid #FED7AA;border-radius:12px;padding:14px;text-align:center;cursor:pointer">
+        <div style="font-size:1.8rem">📷</div>
+        <div style="font-size:.8rem;font-weight:700;color:#92400E;margin-top:5px">Scan bill/photo</div>
+        <div style="font-size:.69rem;color:var(--mid);margin-top:2px">Delivery screenshot</div>
+      </div>
+      <div onclick="closeMod('invMethodModal');openTextListModal()" style="background:#EFF6FF;border:2px solid #BFDBFE;border-radius:12px;padding:14px;text-align:center;cursor:pointer">
+        <div style="font-size:1.8rem">📝</div>
+        <div style="font-size:.8rem;font-weight:700;color:#1D4ED8;margin-top:5px">Paste/type list</div>
+        <div style="font-size:.69rem;color:var(--mid);margin-top:2px">WhatsApp list or text</div>
+      </div>
+      <div onclick="closeMod('invMethodModal');document.getElementById('scanFile').click()" style="background:#F5F3FF;border:2px solid #DDD6FE;border-radius:12px;padding:14px;text-align:center;cursor:pointer">
+        <div style="font-size:1.8rem">🛒</div>
+        <div style="font-size:.8rem;font-weight:700;color:#4C1D95;margin-top:5px">Photo of goods</div>
+        <div style="font-size:.69rem;color:var(--mid);margin-top:2px">Fridge or groceries</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXT LIST MODAL -->
+<div class="ov" id="textListModal">
+  <div class="sheet">
+    <div class="shd"><div><h3>📝 Paste Grocery List</h3><p>Type or paste a list — one item per line</p></div><button class="cls" onclick="closeMod('textListModal')">✕</button></div>
+    <div class="fg">
+      <label>Grocery list (one item per line)</label>
+      <textarea id="textListInput" style="min-height:150px" placeholder="e.g.
+Onion 1kg
+Milk 2 packets
+Eggs 12
+Chicken 500g
+Tomato 500g
+Rice 5kg"></textarea>
+    </div>
+    <div style="font-size:.74rem;color:var(--mid);margin-bottom:10px">Format: Item name + quantity + unit (Claude AI will parse it)</div>
+    <button class="btn" onclick="parseTextList()">🤖 Parse & Add to Stock</button>
+  </div>
+</div>
+
 <!-- SCAN MODAL -->
 <div class="ov" id="scanModal">
   <div class="sheet">
@@ -447,17 +529,82 @@ let foods=[], inventory=[], family=[], planItems=[], pendingFood=null, copyTarge
 // ═══════════════════════════════════════════════════
 // INGREDIENT LIBRARY (English + Malayalam)
 // ═══════════════════════════════════════════════════
+// Trackable ingredients only — spices/seasonings excluded (assumed always available)
 const ING_LIB = [
-  {en:"Rice",ml:"അരി"},{en:"Matta rice",ml:"മട്ട അരി"},{en:"Raw rice",ml:"പച്ചരി"},{en:"Idli rice",ml:"ഇഡ്ഡലി അരി"},{en:"Puttu podi",ml:"പുട്ടുപൊടി"},{en:"Atta flour",ml:"ഗോതമ്പ് മാവ്"},{en:"Maida",ml:"മൈദ"},{en:"Rava",ml:"റവ"},{en:"Rice flour",ml:"അരിമാവ്"},
-  {en:"Urad dal",ml:"ഉഴുന്ന്"},{en:"Chana dal",ml:"കടലപ്പരിപ്പ്"},{en:"Moong dal",ml:"ചെറുപയർ"},{en:"Toor dal",ml:"തുവരപ്പരിപ്പ്"},{en:"Kadala",ml:"കടല"},
-  {en:"Onion",ml:"ഉള്ളി"},{en:"Tomato",ml:"തക്കാളി"},{en:"Potato",ml:"ഉരുളക്കിഴങ്ങ്"},{en:"Green chilli",ml:"പച്ചമുളക്"},{en:"Yellow pumpkin",ml:"മത്തൻ"},{en:"Drumstick",ml:"മുരിങ്ങക്കായ"},{en:"Raw banana",ml:"നേന്ത്രക്കായ"},{en:"Yam",ml:"ചേന"},{en:"Tapioca",ml:"കപ്പ"},{en:"Brinjal",ml:"വഴുതന"},{en:"Beans",ml:"ബീൻസ്"},{en:"Cabbage",ml:"കാബേജ്"},{en:"Carrot",ml:"കാരറ്റ്"},
-  {en:"Ripe mango",ml:"മാമ്പഴം"},{en:"Pineapple",ml:"കൈതച്ചക്ക"},{en:"Banana",ml:"പഴം"},{en:"Coconut",ml:"തേങ്ങ"},{en:"Grated coconut",ml:"ചിരകിയ തേങ്ങ"},{en:"Jackfruit",ml:"ചക്ക"},
-  {en:"Eggs",ml:"മുട്ട"},{en:"Chicken",ml:"കോഴി"},{en:"Fish",ml:"മീൻ"},{en:"Prawns",ml:"ചെമ്മീൻ"},{en:"Mutton",ml:"ആടിറച്ചി"},{en:"Beef",ml:"പോത്തിറച്ചി"},{en:"Sardine",ml:"മത്തി"},{en:"Mackerel",ml:"അയല"},
-  {en:"Curd",ml:"തൈര്"},{en:"Milk",ml:"പാൽ"},{en:"Coconut milk",ml:"തേങ്ങ പാൽ"},{en:"Butter",ml:"വെണ്ണ"},{en:"Ghee",ml:"നെയ്യ്"},
-  {en:"Coconut oil",ml:"വെളിച്ചെണ്ണ"},{en:"Oil",ml:"എണ്ണ"},
-  {en:"Salt",ml:"ഉപ്പ്"},{en:"Turmeric",ml:"മഞ്ഞൾ"},{en:"Chilli powder",ml:"മുളകുപൊടി"},{en:"Coriander powder",ml:"മല്ലിപ്പൊടി"},{en:"Garam masala",ml:"ഗരം മസാല"},{en:"Mustard seeds",ml:"കടുക്"},{en:"Cumin seeds",ml:"ജീരകം"},{en:"Fenugreek seeds",ml:"ഉലുവ"},{en:"Pepper",ml:"കുരുമുളക്"},{en:"Cardamom",ml:"ഏലക്ക"},
-  {en:"Ginger",ml:"ഇഞ്ചി"},{en:"Garlic",ml:"വെളുത്തുള്ളി"},{en:"Ginger-garlic paste",ml:"ഇഞ്ചി വെളുത്തുള്ളി അരപ്പ്"},{en:"Curry leaves",ml:"കറിവേപ്പില"},{en:"Coriander leaves",ml:"മല്ലിയില"},
-  {en:"Water",ml:"വെള്ളം"},{en:"Sugar",ml:"പഞ്ചസാര"},{en:"Jaggery",ml:"ശർക്കര"},{en:"Tamarind",ml:"പുളി"},{en:"Dosa batter",ml:"ദോശ മാവ്"},{en:"Idli batter",ml:"ഇഡ്ഡലി മാവ്"}
+  // Grains & Flours (track these)
+  {en:"Rice",ml:"അരി",track:true},{en:"Matta rice",ml:"മട്ട അരി",track:true},{en:"Raw rice",ml:"പച്ചരി",track:true},
+  {en:"Idli rice",ml:"ഇഡ്ഡലി അരി",track:true},{en:"Puttu podi",ml:"പുട്ടുപൊടി",track:true},
+  {en:"Atta flour",ml:"ഗോതമ്പ് മാവ്",track:true},{en:"Maida",ml:"മൈദ",track:true},
+  {en:"Rava / Sooji",ml:"റവ",track:true},{en:"Rice flour",ml:"അരിമാവ്",track:true},
+  {en:"Poha / Aval",ml:"അവൽ",track:true},{en:"Bread",ml:"ബ്രെഡ്",track:true},
+  // Dal & Pulses
+  {en:"Urad dal",ml:"ഉഴുന്ന്",track:true},{en:"Chana dal",ml:"കടലപ്പരിപ്പ്",track:true},
+  {en:"Moong dal",ml:"ചെറുപയർ",track:true},{en:"Toor dal",ml:"തുവരപ്പരിപ്പ്",track:true},
+  {en:"Kadala",ml:"കടല",track:true},{en:"Rajma",ml:"രാജ്മ",track:true},
+  {en:"Green peas",ml:"പച്ചപ്പയർ",track:true},{en:"Lentils",ml:"പരിപ്പ്",track:true},
+  // Vegetables
+  {en:"Onion",ml:"ഉള്ളി",track:true},{en:"Tomato",ml:"തക്കാളി",track:true},
+  {en:"Potato",ml:"ഉരുളക്കിഴങ്ങ്",track:true},{en:"Green chilli",ml:"പച്ചമുളക്",track:true},
+  {en:"Yellow pumpkin",ml:"മത്തൻ",track:true},{en:"Bitter gourd",ml:"പാവൽ",track:true},
+  {en:"Drumstick",ml:"മുരിങ്ങക്കായ",track:true},{en:"Raw banana",ml:"നേന്ത്രക്കായ",track:true},
+  {en:"Yam",ml:"ചേന",track:true},{en:"Elephant yam",ml:"ചേമ്പ്",track:true},
+  {en:"Ash gourd",ml:"കുമ്പളം",track:true},{en:"Snake gourd",ml:"പടവലം",track:true},
+  {en:"Brinjal",ml:"വഴുതന",track:true},{en:"Beans",ml:"ബീൻസ്",track:true},
+  {en:"Cabbage",ml:"കാബേജ്",track:true},{en:"Carrot",ml:"കാരറ്റ്",track:true},
+  {en:"Beetroot",ml:"ബീറ്റ്റൂട്ട്",track:true},{en:"Tapioca",ml:"കപ്പ",track:true},
+  {en:"Sweet potato",ml:"മധുരക്കിഴങ്ങ്",track:true},{en:"Raw papaya",ml:"പച്ച പപ്പായ",track:true},
+  {en:"Banana flower",ml:"കദളിപ്പൂ",track:true},{en:"Moringa leaves",ml:"മുരിങ്ങയില",track:true},
+  {en:"Spinach",ml:"ചീര",track:true},{en:"Taro root",ml:"ചേമ്പ്",track:true},
+  // Fruits
+  {en:"Banana",ml:"പഴം",track:true},{en:"Ripe mango",ml:"മാമ്പഴം",track:true},
+  {en:"Pineapple",ml:"കൈതച്ചക്ക",track:true},{en:"Jackfruit",ml:"ചക്ക",track:true},
+  {en:"Watermelon",ml:"തർബൂസ്",track:true},{en:"Papaya",ml:"പപ്പായ",track:true},
+  {en:"Grapes",ml:"മുന്തിരി",track:true},{en:"Apple",ml:"ആപ്പിൾ",track:true},
+  {en:"Orange",ml:"ഓറഞ്ച്",track:true},{en:"Dragon fruit",ml:"ഡ്രാഗൺ ഫ്രൂട്ട്",track:true},
+  {en:"Guava",ml:"പേരക്ക",track:true},{en:"Coconut",ml:"തേങ്ങ",track:true},
+  {en:"Grated coconut",ml:"ചിരകിയ തേങ്ങ",track:true},
+  // Proteins - Eggs & Meat
+  {en:"Eggs",ml:"മുട്ട",track:true},{en:"Chicken",ml:"കോഴി",track:true},
+  {en:"Fish",ml:"മീൻ",track:true},{en:"Prawns",ml:"ചെമ്മീൻ",track:true},
+  {en:"Mutton",ml:"ആടിറച്ചി",track:true},{en:"Beef",ml:"പോത്തിറച്ചി",track:true},
+  {en:"Sardine",ml:"മത്തി",track:true},{en:"Mackerel",ml:"അയല",track:true},
+  {en:"Pearl spot",ml:"കരിമീൻ",track:true},{en:"Pomfret",ml:"ആവോലി",track:true},
+  {en:"Squid",ml:"കണവ",track:true},{en:"Crab",ml:"ഞണ്ട്",track:true},
+  {en:"Clams",ml:"അട",track:true},{en:"Mussels",ml:"കക്ക",track:true},
+  // Dairy
+  {en:"Milk",ml:"പാൽ",track:true},{en:"Curd",ml:"തൈര്",track:true},
+  {en:"Coconut milk",ml:"തേങ്ങ പാൽ",track:true},{en:"Butter",ml:"വെണ്ണ",track:true},
+  {en:"Ghee",ml:"നെയ്യ്",track:true},{en:"Paneer",ml:"പനീർ",track:true},
+  {en:"Condensed milk",ml:"കണ്ടൻസ്ഡ് മിൽക്ക്",track:true},
+  // Oils
+  {en:"Coconut oil",ml:"വെളിച്ചെണ്ണ",track:true},{en:"Sunflower oil",ml:"സൂര്യകാന്തി എണ്ണ",track:true},
+  // Ready-to-cook
+  {en:"Dosa batter",ml:"ദോശ മാവ്",track:true},{en:"Idli batter",ml:"ഇഡ്ഡലി മാവ്",track:true},
+  {en:"Atta dough",ml:"ഗോതമ്പ് കുഴച്ചത്",track:true},
+  // Pantry staples (track quantity)
+  {en:"Sugar",ml:"പഞ്ചസാര",track:true},{en:"Jaggery",ml:"ശർക്കര",track:true},
+  {en:"Tamarind",ml:"പുളി",track:true},{en:"Coconut vinegar",ml:"തേങ്ങ വിനാഗിരി",track:true},
+  {en:"Ginger",ml:"ഇഞ്ചി",track:true},{en:"Garlic",ml:"വെളുത്തുള്ളി",track:true},
+];
+
+// Kerala ready-to-eat and common dishes for food database
+const FOOD_LIB_EXT = [
+  {en:"Appam",ml:"അപ്പം"},{en:"Idiappam",ml:"ഇടിയപ്പം"},{en:"Pathiri",ml:"പത്തിരി"},
+  {en:"Parotta",ml:"പൊറോട്ട"},{en:"Chapati",ml:"ചപ്പാത്തി"},{en:"Poori",ml:"പൂരി"},
+  {en:"Upma",ml:"ഉപ്മ"},{en:"Rava Upma",ml:"റവ ഉപ്മ"},{en:"Pongal",ml:"പൊങ്കൽ"},
+  {en:"Sambar",ml:"സാമ്പാർ"},{en:"Rasam",ml:"രസം"},{en:"Aviyal",ml:"അവിയൽ"},
+  {en:"Thoran",ml:"തോരൻ"},{en:"Mezhukkupuratti",ml:"മെഴുക്കുപുരട്ടി"},
+  {en:"Olan",ml:"ഓലൻ"},{en:"Erissery",ml:"എരിശ്ശേരി"},{en:"Kalan",ml:"കാളൻ"},
+  {en:"Pachadi",ml:"പച്ചടി"},{en:"Kichadi",ml:"കിച്ചടി"},{en:"Kootu curry",ml:"കൂട്ടുകറി"},
+  {en:"Papad",ml:"പപ്പടം"},{en:"Pickle",ml:"അച്ചാർ"},
+  {en:"Fish Curry",ml:"മീൻ കറി"},{en:"Fish Fry",ml:"മീൻ വറുത്തത്"},
+  {en:"Beef Curry",ml:"ബീഫ് കറി"},{en:"Mutton Curry",ml:"ആടിറച്ചി കറി"},
+  {en:"Prawn Curry",ml:"ചെമ്മീൻ കറി"},{en:"Prawn Fry",ml:"ചെമ്മീൻ വറുത്തത്"},
+  {en:"Sardine Fry",ml:"മത്തി വറുത്തത്"},{en:"Mackerel Fry",ml:"അയല വറുത്തത്"},
+  {en:"Beef Fry",ml:"ബീഫ് വറുത്തത്"},{en:"Chicken Fry",ml:"കോഴി വറുത്തത്"},
+  {en:"Biriyani",ml:"ബിരിയാണി"},{en:"Fried Rice",ml:"ഫ്രൈഡ് റൈസ്"},
+  {en:"Payasam",ml:"പായസം"},{en:"Halwa",ml:"ഹൽവ"},
+  {en:"Banana chips",ml:"പഴം ചിപ്സ്"},{en:"Unniyappam",ml:"ഉണ്ണിയപ്പം"},
 ];
 
 const UNITS=['numbers','g','mL','cups','servings','tbsp','tsp','kg','litre','sprig','pinch'];
@@ -841,21 +988,59 @@ function handleScan(input){
   const file=input.files[0];if(!file)return;
   const key=getAKey();
   if(!key){toast('⚠️ Add Anthropic API key in ⚙️ Setup first');sw('set',document.querySelectorAll('.tab')[4]);return;}
-  const reader=new FileReader();
-  reader.onload=async(e)=>{
-    const base64=e.target.result.split(',')[1];
-    const mediaType=file.type||'image/jpeg';
+  
+  // Compress image before sending to Claude for better quality
+  const canvas=document.createElement('canvas');
+  const ctx=canvas.getContext('2d');
+  const img=new Image();
+  const objUrl=URL.createObjectURL(file);
+  img.onload=async()=>{
+    // Max 1600px on longest side for best OCR quality
+    const MAX=1600;
+    let w=img.width, h=img.height;
+    if(w>MAX||h>MAX){if(w>h){h=Math.round(h*(MAX/w));w=MAX;}else{w=Math.round(w*(MAX/h));h=MAX;}}
+    canvas.width=w; canvas.height=h;
+    ctx.drawImage(img,0,0,w,h);
+    URL.revokeObjectURL(objUrl);
+    const dataUrl=canvas.toDataURL('image/jpeg',0.92);
+    const base64=dataUrl.split(',')[1];
     document.getElementById('scanModal').classList.add('on');
-    document.getElementById('scanContent').innerHTML='<img src="'+e.target.result+'" class="scanprev"><div class="scanstate"><div class="scanspin"></div><div style="font-weight:700;font-size:.84rem">Reading with Claude AI…</div><div style="font-size:.73rem;margin-top:4px;color:var(--mid)">Identifying grocery items</div></div>';
-    await doScan(base64,mediaType,e.target.result);
+    document.getElementById('scanContent').innerHTML=
+      '<img src="'+dataUrl+'" class="scanprev">'+
+      '<div class="scanstate"><div class="scanspin"></div>'+
+      '<div style="font-weight:700;font-size:.84rem">Reading with Claude AI…</div>'+
+      '<div style="font-size:.73rem;margin-top:4px;color:var(--mid)">Analysing your grocery items</div></div>';
+    await doScan(base64,'image/jpeg',dataUrl);
   };
-  reader.readAsDataURL(file);
+  img.onerror=()=>{ URL.revokeObjectURL(objUrl); toast('❌ Could not read image'); };
+  img.src=objUrl;
   input.value='';
 }
 
 async function doScan(base64,mediaType,previewSrc){
   const key=getAKey();
-  const prompt='Analyze this grocery delivery screenshot or bill from India. Extract ALL food/grocery items visible. For each return JSON: name (English), nameMl (Malayalam if known else empty string), qty (number, convert kg to g, litre to mL), unit (one of: g,kg,mL,litre,numbers,cups,pack). Return ONLY a valid JSON array, no markdown, no text.';
+  const prompt=`You are analyzing a grocery bill, delivery screenshot, handwritten list, or photo of groceries from Kerala/India.
+
+Extract ONLY major grocery items that need tracking: vegetables, fruits, grains, flour, milk, eggs, meat, fish, cooking oil, pulses, rice, dal. 
+
+DO NOT include: salt, turmeric, chilli powder, garam masala, pepper, cardamom, mustard seeds, cumin, coriander powder, fenugreek, curry leaves, or any spice/seasoning measured in teaspoons/tablespoons. These are assumed always available.
+
+For each item return JSON with:
+- name: English name (standardize: "Onion" not "Onions", "Eggs" not "egg")
+- nameMl: Malayalam name if you know it (else empty string)  
+- qty: numeric quantity only (convert kg→g multiply by 1000, litre→mL multiply by 1000, keep numbers as-is)
+- unit: one of exactly: g, mL, numbers, cups, pack, kg, litre
+
+Examples:
+- "500g Onion" → {"name":"Onion","nameMl":"ഉള്ളി","qty":500,"unit":"g"}
+- "2kg Atta" → {"name":"Atta flour","nameMl":"ഗോതമ്പ് മാവ്","qty":2000,"unit":"g"}
+- "1L Milk" → {"name":"Milk","nameMl":"പാൽ","qty":1000,"unit":"mL"}
+- "12 Eggs" → {"name":"Eggs","nameMl":"മുട്ട","qty":12,"unit":"numbers"}
+- "500g Dragon Fruit" → {"name":"Dragon Fruit","nameMl":"","qty":500,"unit":"g"}
+
+This could be a delivery app screenshot, photo of vegetables/fruits, handwritten list, or grocery receipt. Extract everything visible.
+
+Return ONLY a valid JSON array. No markdown, no explanation, no backticks.`;
   try{
     const response=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-calls':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1024,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mediaType,data:base64}},{type:'text',text:prompt}]}]})});
     if(!response.ok){const err=await response.json();throw new Error(err.error?.message||'API error '+response.status);}
@@ -872,9 +1057,9 @@ async function doScan(base64,mediaType,previewSrc){
 }
 
 function renderScanResults(previewSrc){
-  if(!scanItems.length){document.getElementById('scanContent').innerHTML='<img src="'+previewSrc+'" class="scanprev"><div class="em"><div class="ei">🤔</div><h3>No items found</h3><p>Try a clearer photo</p></div>';return;}
+  if(!scanItems.length){document.getElementById('scanContent').innerHTML=(previewSrc?'<img src="'+previewSrc+'" class="scanprev">':'')+'<div class="em"><div class="ei">🤔</div><h3>No items found</h3><p>Try a clearer photo or different list format</p></div>';return;}
   const uO=(sel)=>['g','kg','mL','litre','numbers','cups','tbsp','tsp','pack'].map(u=>'<option value="'+u+'"'+(u===sel?' selected':'')+'>'+u+'</option>').join('');
-  document.getElementById('scanContent').innerHTML='<img src="'+previewSrc+'" class="scanprev"><div style="font-size:.78rem;font-weight:700;color:var(--leaf);margin-bottom:8px">✅ Found '+scanItems.length+' items — tap ✓ to deselect any</div><div id="scanResultList">'+scanItems.map((item,idx)=>'<div class="sri"><div class="srichk on" id="schk-'+idx+'" onclick="toggleScanItem('+idx+')">✓</div><div style="flex:1"><div class="srinm">'+item.name+'</div>'+(item.nameMl?'<div class="sriml">'+item.nameMl+'</div>':'')+'<div class="sriqty"><input type="number" value="'+item.qty+'" min="0" step="any" onchange="scanItems['+idx+'].qty=parseFloat(this.value)||0"><select onchange="scanItems['+idx+'].unit=this.value">'+uO(item.unit)+'</select></div></div></div>').join('')+'</div><button class="btn" onclick="addScanToStock()" style="margin-top:11px">✅ Add Selected to Stock</button><button class="btn2" onclick="closeMod(\'scanModal\')" style="margin-top:6px">Cancel</button>';
+  document.getElementById('scanContent').innerHTML=(previewSrc?'<img src="'+previewSrc+'" class="scanprev">':'')+'<div style="font-size:.78rem;font-weight:700;color:var(--leaf);margin-bottom:8px">✅ Found '+scanItems.length+' items — tap ✓ to deselect any</div><div id="scanResultList">'+scanItems.map((item,idx)=>'<div class="sri"><div class="srichk on" id="schk-'+idx+'" onclick="toggleScanItem('+idx+')">✓</div><div style="flex:1"><div class="srinm">'+item.name+'</div>'+(item.nameMl?'<div class="sriml">'+item.nameMl+'</div>':'')+'<div class="sriqty"><input type="number" value="'+item.qty+'" min="0" step="any" onchange="scanItems['+idx+'].qty=parseFloat(this.value)||0"><select onchange="scanItems['+idx+'].unit=this.value">'+uO(item.unit)+'</select></div></div></div>').join('')+'</div><button class="btn" onclick="addScanToStock()" style="margin-top:11px">✅ Add Selected to Stock</button><button class="btn2" onclick="closeMod(\'scanModal\')" style="margin-top:6px">Cancel</button>';
 }
 
 function toggleScanItem(idx){scanItems[idx].selected=!scanItems[idx].selected;const c=document.getElementById('schk-'+idx);c.classList.toggle('on',scanItems[idx].selected);c.textContent=scanItems[idx].selected?'✓':'';}
@@ -954,6 +1139,146 @@ async function seedFoods(){
 }
 
 // ═══════════════════════════════════════════════════
+// COPY MEAL PLAN
+// ═══════════════════════════════════════════════════
+function openCopyPlanModal(){
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('cpFromDate').value=document.getElementById('planDate').value||today;
+  document.getElementById('cpToDate').value=today;
+  document.getElementById('copyPlanModal').classList.add('on');
+}
+
+async function copyDayPlan(){
+  const from=document.getElementById('cpFromDate').value;
+  const to=document.getElementById('cpToDate').value;
+  if(!from||!to){toast('⚠️ Select both dates');return;}
+  if(from===to){toast('⚠️ From and To dates must be different');return;}
+  toast('📋 Copying meals…');
+  try{
+    const items=await sbGet('meal_plan',`plan_date=eq.${from}`);
+    if(!items.length){toast('No meals found on '+from);return;}
+    for(const item of items){
+      const {id,created_at,...data}=item;
+      await sbInsert('meal_plan',{...data,plan_date:to});
+    }
+    closeMod('copyPlanModal');
+    document.getElementById('planDate').value=to;
+    await loadPlan();
+    toast('✅ Copied '+items.length+' meals to '+to);
+  }catch(e){toast('❌ '+e.message.slice(0,80));}
+}
+
+function openCopyWeekModal(){
+  const today=new Date().toISOString().split('T')[0];
+  // Get Monday of current week
+  const d=new Date(today+'T12:00:00');
+  const day=d.getDay();
+  const diff=d.getDate()-(day===0?6:day-1);
+  const mon=new Date(d.setDate(diff)).toISOString().split('T')[0];
+  document.getElementById('cwFromDate').value=mon;
+  document.getElementById('cwToDate').value=today;
+  document.getElementById('copyWeekModal').classList.add('on');
+}
+
+async function copyWeekPlan(){
+  const from=document.getElementById('cwFromDate').value;
+  const to=document.getElementById('cwToDate').value;
+  if(!from||!to){toast('⚠️ Select both start dates');return;}
+  if(from===to){toast('⚠️ Weeks must be different');return;}
+  toast('📅 Copying week…');
+  try{
+    let totalCopied=0;
+    for(let i=0;i<7;i++){
+      const fromDate=new Date(from+'T12:00:00');fromDate.setDate(fromDate.getDate()+i);
+      const toDate=new Date(to+'T12:00:00');toDate.setDate(toDate.getDate()+i);
+      const fromStr=fromDate.toISOString().split('T')[0];
+      const toStr=toDate.toISOString().split('T')[0];
+      const items=await sbGet('meal_plan',`plan_date=eq.${fromStr}`);
+      for(const item of items){
+        const {id,created_at,...data}=item;
+        await sbInsert('meal_plan',{...data,plan_date:toStr});
+      }
+      totalCopied+=items.length;
+    }
+    closeMod('copyWeekModal');
+    await loadPlan();
+    toast('✅ Copied '+totalCopied+' meals across 7 days');
+  }catch(e){toast('❌ '+e.message.slice(0,80));}
+}
+
+// ═══════════════════════════════════════════════════
+// TEXT LIST PARSING (WhatsApp list / typed list)
+// ═══════════════════════════════════════════════════
+function openInvMethodModal(){document.getElementById('invMethodModal').classList.add('on');}
+function openTextListModal(){document.getElementById('textListModal').classList.add('on');}
+
+async function parseTextList(){
+  const text=document.getElementById('textListInput').value.trim();
+  if(!text){toast('⚠️ Enter a grocery list');return;}
+  const key=getAKey();
+  if(!key){
+    // Try simple parsing without AI
+    simpleParseList(text);
+    return;
+  }
+  toast('🤖 Parsing with Claude AI…');
+  try{
+    const prompt=`Parse this grocery shopping list from India/Kerala. Extract each item with name, quantity and unit.
+List:
+${text}
+
+Return ONLY a JSON array. Each item: {"name":"English name","nameMl":"Malayalam if known","qty":number,"unit":"g or kg or mL or numbers or pack"}
+Rules:
+- Convert kg to g (multiply by 1000), litre to mL (multiply by 1000)  
+- DO NOT include spices like salt, turmeric, chilli powder, garam masala etc
+- Use standard names: "Onion" not "Onions", "Eggs" not "egg"
+- If no unit/qty mentioned, use qty:1 unit:"numbers"
+Return ONLY valid JSON array, no other text.`;
+    const response=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-calls':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1024,messages:[{role:'user',content:prompt}]})});
+    if(!response.ok)throw new Error('API error');
+    const data=await response.json();
+    const txt=data.content[0]?.text||'[]';
+    const s=txt.indexOf('['),en=txt.lastIndexOf(']');
+    if(s===-1)throw new Error('Could not parse list');
+    scanItems=JSON.parse(txt.slice(s,en+1));
+    scanItems=scanItems.map(item=>{
+      if(!item.nameMl){const lib=ING_LIB.find(l=>l.en.toLowerCase()===item.name.toLowerCase());if(lib)item.nameMl=lib.ml;}
+      item.selected=true;return item;
+    });
+    closeMod('textListModal');
+    document.getElementById('scanModal').classList.add('on');
+    renderScanResults('');
+    toast('✅ Found '+scanItems.length+' items');
+  }catch(e){
+    // Fall back to simple parsing
+    simpleParseList(text);
+  }
+}
+
+function simpleParseList(text){
+  const lines=text.split('\n').map(l=>l.trim()).filter(l=>l.length>2);
+  scanItems=lines.map(line=>{
+    const m=line.match(/^(.+?)\s+(\d+\.?\d*)\s*(kg|g|ml|mL|l|L|litre|litres|nos?|numbers?|packets?|packs?|pieces?)?/i);
+    let name=line,qty=1,unit='numbers';
+    if(m){
+      name=m[1].trim();qty=parseFloat(m[2])||1;
+      const u=(m[3]||'').toLowerCase();
+      if(u==='kg'){qty*=1000;unit='g';}
+      else if(u==='g'){unit='g';}
+      else if(['l','litre','litres'].includes(u)){qty*=1000;unit='mL';}
+      else if(u==='ml'||u==='ml'){unit='mL';}
+      else{unit='numbers';}
+    }
+    const lib=ING_LIB.find(l=>l.en.toLowerCase().includes(name.toLowerCase())||name.toLowerCase().includes(l.en.toLowerCase()));
+    return{name:lib?lib.en:name,nameMl:lib?lib.ml:'',qty,unit,selected:true};
+  }).filter(i=>i.name.length>1);
+  closeMod('textListModal');
+  document.getElementById('scanModal').classList.add('on');
+  renderScanResults('');
+  toast('✅ Found '+scanItems.length+' items — review and confirm');
+}
+
+// ═══════════════════════════════════════════════════
 // NAV & MODALS
 // ═══════════════════════════════════════════════════
 function sw(name,el){
@@ -965,7 +1290,7 @@ function sw(name,el){
   if(name==='sug')genSuggestions();
 }
 function closeMod(id){document.getElementById(id).classList.remove('on');pendingFood=null;copyTarget=null;}
-['planModal','editModal','addModal','addIngModal','famModal','copyModal','scanModal'].forEach(id=>{
+['planModal','editModal','addModal','addIngModal','famModal','copyModal','scanModal','copyPlanModal','copyWeekModal','invMethodModal','textListModal'].forEach(id=>{
   document.getElementById(id)?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeMod(id);});
 });
 let tt;
